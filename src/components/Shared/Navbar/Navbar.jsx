@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <Headroom>
       <div className=" w-full bg-opacity-50 backdrop-blur-sm  bg-transparent shadow-sm">
-        <div className="py-0 border-b-[1px]">
+        <div className="py-0">
           <Container>
             <div className="flex flex-row  items-center justify-between gap-3 md:gap-0">
               {/* Logo */}
@@ -104,6 +104,12 @@ const Navbar = () => {
                               className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
                             >
                               Dashboard
+                            </Link>
+                            <Link
+                              to="/dashboard/profile"
+                              className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                            >
+                              My Profile
                             </Link>
                             <div
                               onClick={logOut}

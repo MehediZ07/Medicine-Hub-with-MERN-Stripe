@@ -4,10 +4,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../Shared/LoadingSpinner";
-export default function HeroSlider() {
+export default function HeroSlider({ slider, sliderImageInput }) {
   const [carouseldata, setCarouseldata] = useState({});
   const [loading, setLoading] = useState(true);
   const [inputData, setInputData] = useState("");
+  //   console.log(slider);
+  //   const [sliders, setSlider] = useState(slider);
 
   useEffect(() => {
     fetchData();
@@ -43,28 +45,33 @@ export default function HeroSlider() {
 
   return (
     <div>
-      <Carousel
-        autoPlay
-        interval={2000}
-        infiniteLoop
-        showThumbs={false}
-        showStatus={false}
-        transitionTime={500}
-      >
-        {carouseldata?.map((data, index) => (
-          <div key={index}>
-            <img src={data.data} alt={`carousel-image-${index}`} />
-          </div>
-        ))}
-      </Carousel>
-      <div>
-        <input
-          type="text"
-          value={inputData}
-          onChange={(e) => setInputData(e.target.value)}
-        />
-        <button onClick={handleSubmit}>Submit</button>
-      </div>
+      {sliderImageInput && (
+        <Carousel
+          autoPlay
+          interval={2000}
+          infiniteLoop
+          showThumbs={false}
+          showStatus={false}
+          transitionTime={500}
+        >
+          {carouseldata?.map((data, index) => (
+            <div className="" key={index}>
+              <img src={data.data} alt={`carousel-image-${index}`} />
+            </div>
+          ))}
+        </Carousel>
+      )}
+
+      {slider && (
+        <div>
+          <input
+            type="text"
+            value={inputData}
+            onChange={(e) => setInputData(e.target.value)}
+          />
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
+      )}
     </div>
   );
 }
