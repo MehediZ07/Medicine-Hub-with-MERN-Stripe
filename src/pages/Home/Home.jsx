@@ -4,6 +4,7 @@ import Medicines from "../../components/Home/Medicines";
 import HeroSlider from "../../components/Home/HeroSlider";
 import Categories from "../../components/Home/Categories";
 import Container from "../../components/Shared/Container";
+import FeaturesSection from "../../components/Home/FeaturesSection";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <HeroSlider slider={true} sliderImageInput={true} />
       <Container>
         <Categories />
+        <FeaturesSection />
       </Container>
       <Medicines />
     </div>
