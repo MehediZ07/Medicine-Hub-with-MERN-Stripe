@@ -8,14 +8,14 @@ import {
 const FeaturesSection = () => {
   return (
     <div className="my-4">
-      <div className=" p-6">
+      <div className=" py-6">
         <h2 className="text-3xl font-bold">Our Features</h2>
         <p className="text-gray-600 mt-2">
           We are offering some extra value on your shoping.
         </p>
       </div>
 
-      <div className="grid mb-4 gap-6 px-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid mb-4 gap-6  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {/* Card 1 */}
         <div className="flex flex-col items-start bg-base-100 p-6 rounded-lg shadow-md">
           <FaShoppingCart className="text-first-color text-3xl mb-4" />

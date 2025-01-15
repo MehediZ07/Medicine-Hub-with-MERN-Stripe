@@ -17,6 +17,8 @@ import MyOrders from "../pages/Dashboard/Customer/MyOrders";
 import SellerRoute from "./SellerRoute";
 import AdminRoute from "./AdminRoute";
 import MedicineDetails from "../pages/MedicineDetails/medicineDetails";
+import HeroSlider from "../components/Home/HeroSlider";
+import Categories from "../components/Home/Categories";
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +80,26 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <AdminRoute>
               <ManageUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-category",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <Categories />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-banner",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <HeroSlider />
             </AdminRoute>
           </PrivateRoute>
         ),

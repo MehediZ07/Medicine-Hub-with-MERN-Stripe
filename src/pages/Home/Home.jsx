@@ -12,9 +12,10 @@ const Home = () => {
       <Helmet>
         <title> medicineNet | Buy Your Desired medicine</title>
       </Helmet>
-      <HeroSlider slider={true} sliderImageInput={true} />
+
       <Container>
-        <Categories />
+        <HeroSlider slider={true} sliderImageInput={false} />
+        <Categories category={true} addCategory={false} />
         <FeaturesSection />
       </Container>
       <Medicines />
