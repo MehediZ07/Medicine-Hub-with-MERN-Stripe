@@ -19,6 +19,8 @@ import AdminRoute from "./AdminRoute";
 import MedicineDetails from "../pages/MedicineDetails/medicineDetails";
 import HeroSlider from "../components/Home/HeroSlider";
 import Categories from "../components/Home/Categories";
+import AskAdd from "../components/Dashboard/Sidebar/Menu/Advertisement/AskAdd";
+import AddRequest from "../components/Dashboard/Sidebar/Menu/Advertisement/AddRequest";
 
 export const router = createBrowserRouter([
   {
@@ -127,6 +129,36 @@ export const router = createBrowserRouter([
             <SellerRoute>
               <ManageOrders />
             </SellerRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "ask-add",
+        element: (
+          <PrivateRoute>
+            <SellerRoute>
+              <AskAdd />
+            </SellerRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-orders-all",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageOrders />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-request",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AddRequest />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },

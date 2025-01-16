@@ -8,8 +8,17 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
   const axiosSecure = useAxiosSecure();
   let [isOpen, setIsOpen] = useState(false);
   const closeModal = () => setIsOpen(false);
-  const { name, image, category, price, quantity, _id, status, medicineId } =
-    orderData;
+  const {
+    name,
+    image,
+    category,
+    price,
+    quantity,
+    _id,
+    status,
+    medicineId,
+    transactionId,
+  } = orderData;
 
   // handle order delete/cancellation
   const handleDelete = async () => {
@@ -50,14 +59,15 @@ const CustomerOrderDataRow = ({ orderData, refetch }) => {
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{name}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{category}</p>
-      </td>
+
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">${price}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{quantity}</p>
+      </td>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 whitespace-no-wrap">{transactionId}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900 whitespace-no-wrap">{status}</p>
