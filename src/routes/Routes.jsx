@@ -21,6 +21,7 @@ import HeroSlider from "../components/Home/HeroSlider";
 import Categories from "../components/Home/Categories";
 import AskAdd from "../components/Dashboard/Sidebar/Menu/Advertisement/AskAdd";
 import AddRequest from "../components/Dashboard/Sidebar/Menu/Advertisement/AddRequest";
+import Shop from "../pages/Shop/Shop";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "/medicine/:id",
         element: <MedicineDetails />,
+      },
+      {
+        path: "shop",
+        element: <Shop />,
       },
     ],
   },
