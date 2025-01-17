@@ -65,7 +65,7 @@ export default function AddRequest() {
                 <a
                   href={seller?.data}
                   target="_blank"
-                  className="px-3 py-1 flex gap-1 items-center text-black bg-green-300 opacity-50 rounded-full w-fit"
+                  className="px-3 py-1 flex gap-1 font-bold items-center text-black bg-blue-300 opacity-50 rounded-full w-fit"
                   rel="noopener noreferrer "
                 >
                   View Add <AiOutlineFundView />

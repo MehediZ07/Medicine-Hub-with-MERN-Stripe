@@ -14,16 +14,16 @@ const AdminMenu = () => {
         address="manage-category"
       />
       <MenuItem
+        icon={MdOutlineManageHistory}
+        label="Manage Orders"
+        address="manage-orders-all"
+      />
+      <MenuItem
         icon={FaUserCog}
         label="Manage banner Advertise"
         address="manage-banner"
       />
 
-      <MenuItem
-        icon={MdOutlineManageHistory}
-        label="Manage Orders"
-        address="manage-orders-all"
-      />
       <MenuItem
         icon={RiAdvertisementFill}
         label="Add Request"

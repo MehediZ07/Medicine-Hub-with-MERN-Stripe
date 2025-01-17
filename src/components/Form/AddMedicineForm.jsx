@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { shortImageName } from "../../utilities";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 
 const AddMedicineForm = ({
   handleSubmit,
@@ -8,6 +11,29 @@ const AddMedicineForm = ({
   setUploadImage,
   loading,
 }) => {
+  const [categories, setCategories] = useState({});
+  const [loadingStat, setLoadingStat] = useState(true);
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/medicine-categories`
+      );
+      setCategories(response.data);
+      setLoadingStat(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  if (loadingStat) {
+    return <LoadingSpinner />;
+  }
+
+  console.log(categories);
+
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
       <form onSubmit={handleSubmit}>
@@ -19,7 +45,7 @@ const AddMedicineForm = ({
                 Name
               </label>
               <input
-                className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
                 name="name"
                 id="name"
                 type="text"
@@ -34,13 +60,16 @@ const AddMedicineForm = ({
               </label>
               <select
                 required
-                className="w-full px-4 py-3 border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                className="w-full px-4 py-3 border solid border-second-color focus:outline-second-color/70 rounded-md bg-white"
                 name="category"
               >
-                <option value="Indoor">Indoor</option>
-                <option value="Outdoor">Outdoor</option>
-                <option value="Succulent">Succulent</option>
-                <option value="Flowering">Flowering</option>
+                {categories.map((category) => {
+                  return (
+                    <option key={category?._id} value={category?.category_name}>
+                      {category?.category_name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             {/* Description */}
@@ -52,7 +81,7 @@ const AddMedicineForm = ({
               <textarea
                 id="description"
                 placeholder="Write medicine description here..."
-                className="block rounded-md focus:lime-300 w-full h-32 px-4 py-3 text-gray-800  border border-lime-300 bg-white focus:outline-lime-500 "
+                className="block rounded-md focus:second-color w-full h-32 px-4 py-3 text-gray-800  border border-second-color bg-white focus:outline-second-color/70 "
                 name="description"
               ></textarea>
             </div>
@@ -66,7 +95,7 @@ const AddMedicineForm = ({
                   Price
                 </label>
                 <input
-                  className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                  className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
                   name="price"
                   id="price"
                   type="number"
@@ -81,11 +110,25 @@ const AddMedicineForm = ({
                   Quantity
                 </label>
                 <input
-                  className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                  className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
                   name="quantity"
                   id="quantity"
                   type="number"
                   placeholder="Available quantity"
+                  required
+                />
+              </div>
+              {/* Quantity */}
+              <div className="space-y-1 text-sm">
+                <label htmlFor="quantity" className="block text-gray-600">
+                  Offer
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
+                  name="offer"
+                  id="offer"
+                  type="number"
+                  placeholder="Enter Offer Amount"
                   required
                 />
               </div>
@@ -109,7 +152,7 @@ const AddMedicineForm = ({
                       accept="image/*"
                       hidden
                     />
-                    <div className="bg-lime-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500">
+                    <div className="bg-second-color/70 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-second-color/70">
                       {/* {uploadImage?.image?.name} */}
                       {shortImageName(uploadImage?.image)}
                     </div>
@@ -127,7 +170,7 @@ const AddMedicineForm = ({
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-lime-500 "
+              className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-second-color/70 "
             >
               {loading ? (
                 <TbFidgetSpinner className="animate-spin m-auto" />

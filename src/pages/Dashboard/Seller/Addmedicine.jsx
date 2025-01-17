@@ -1,11 +1,12 @@
 import { Helmet } from "react-helmet-async";
-import AddmedicineForm from "../../../components/Form/AddmedicineForm";
+// import AddmedicineForm from "../../../components/Form/AddmedicineForm";
 import { imageUpload } from "../../../api/utils";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import AddMedicineForm from "../../../components/Form/AddMedicineForm";
 
 const Addmedicine = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Addmedicine = () => {
     const category = form.category.value;
     const price = parseFloat(form.price.value);
     const quantity = parseInt(form.quantity.value);
+    const offer = parseInt(form.offer.value);
     const image = form.image.files[0];
     const imageUrl = await imageUpload(image);
 
@@ -43,6 +45,7 @@ const Addmedicine = () => {
       description,
       price,
       quantity,
+      offer,
       image: imageUrl,
       seller,
     };
@@ -67,7 +70,7 @@ const Addmedicine = () => {
       </Helmet>
 
       {/* Form */}
-      <AddmedicineForm
+      <AddMedicineForm
         handleSubmit={handleSubmit}
         uploadImage={uploadImage}
         setUploadImage={setUploadImage}
