@@ -22,6 +22,7 @@ import Categories from "../components/Home/Categories";
 import AskAdd from "../components/Dashboard/Sidebar/Menu/Advertisement/AskAdd";
 import AddRequest from "../components/Dashboard/Sidebar/Menu/Advertisement/AddRequest";
 import Shop from "../pages/Shop/Shop";
+import CartPage from "../pages/Cart/CartPage";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "shop",
         element: <Shop />,
+      },
+      {
+        path: "cart",
+        element: <CartPage />,
       },
     ],
   },
