@@ -5,17 +5,37 @@ import { imageUpload } from "../../api/utils";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import PropTypes from "prop-types";
-
+import { useEffect } from "react";
+import axios from "axios";
+import LoadingSpinner from "../Shared/LoadingSpinner";
 const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
   const axiosSecure = useAxiosSecure();
-  console.log(medicine);
+
   const user = useAuth();
   const navigate = useNavigate();
   console.log(user);
+
+  const [categories, setCategories] = useState({});
+  const [loadingStat, setLoadingStat] = useState(true);
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/medicine-categories`
+      );
+      setCategories(response.data);
+      setLoadingStat(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   const [uploadImage, setUploadImage] = useState({
     image: { name: "Upload Button" },
   });
-  const { image, name, category, price, quantity, _id, description } =
+  const { image, name, category, price, quantity, _id, description, offer } =
     medicine || {};
 
   const handleImageChange = (e) => {
@@ -37,6 +57,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
     const category = form.category.value;
     const price = parseFloat(form.price.value);
     const quantity = parseInt(form.quantity.value);
+    const offer = parseInt(form.offer.value);
     const image = form.image.files[0]; // Get the image file
 
     // Upload the image and get the URL
@@ -58,6 +79,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
       category,
       price,
       quantity,
+      offer,
       image: imageUrl, // Image URL after successful upload
     };
 
@@ -74,7 +96,9 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
       toast.error("Failed to update the medicine. Please try again.");
     }
   };
-
+  if (loadingStat) {
+    return <LoadingSpinner />;
+  }
   return (
     <div className="w-full flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
       <form onSubmit={handleSubmit}>
@@ -106,10 +130,16 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
                 name="category"
                 defaultValue={category}
               >
-                <option value="Indoor">Indoor</option>
-                <option value="Outdoor">Outdoor</option>
-                <option value="Succulent">Succulent</option>
-                <option value="Flowering">Flowering</option>
+                <option value="" disabled>
+                  Select Category
+                </option>
+                {categories.map((category) => {
+                  return (
+                    <option key={category?._id} value={category?.category_name}>
+                      {category?.category_name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             {/* Description */}
@@ -156,6 +186,21 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
                   id="quantity"
                   type="number"
                   defaultValue={quantity}
+                  required
+                />
+              </div>
+              {/* Offer */}
+              <div className="space-y-1 text-sm">
+                <label htmlFor="quantity" className="block text-gray-600">
+                  Offer
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
+                  name="offer"
+                  id="offer"
+                  type="number"
+                  placeholder="Enter Offer Amount"
+                  defaultValue={offer}
                   required
                 />
               </div>

@@ -32,8 +32,6 @@ const AddMedicineForm = ({
     return <LoadingSpinner />;
   }
 
-  console.log(categories);
-
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
       <form onSubmit={handleSubmit}>
@@ -49,7 +47,7 @@ const AddMedicineForm = ({
                 name="name"
                 id="name"
                 type="text"
-                placeholder="medicine Name"
+                placeholder="Enter Medicine Name"
                 required
               />
             </div>
@@ -63,6 +61,9 @@ const AddMedicineForm = ({
                 className="w-full px-4 py-3 border solid border-second-color focus:outline-second-color/70 rounded-md bg-white"
                 name="category"
               >
+                <option value="" disabled>
+                  Select Category
+                </option>
                 {categories.map((category) => {
                   return (
                     <option key={category?._id} value={category?.category_name}>
@@ -118,7 +119,7 @@ const AddMedicineForm = ({
                   required
                 />
               </div>
-              {/* Quantity */}
+              {/* Offer */}
               <div className="space-y-1 text-sm">
                 <label htmlFor="quantity" className="block text-gray-600">
                   Offer
