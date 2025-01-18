@@ -29,7 +29,7 @@ export default function Shop() {
       email: user?.email || "No Email",
     };
 
-    const medicineInfo = { medicine, buyer };
+    const medicineInfo = { medicine, buyer, buyQuantity: 1 };
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/addCart`, medicineInfo);
