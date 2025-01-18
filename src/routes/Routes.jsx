@@ -24,6 +24,7 @@ import AddRequest from "../components/Dashboard/Sidebar/Menu/Advertisement/AddRe
 import Shop from "../pages/Shop/Shop";
 import CartPage from "../pages/Cart/CartPage";
 import CheckoutPage from "../pages/Cart/CheckoutPage";
+import InvoicePage from "../pages/Cart/InvoicePage";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: "checkout",
         element: <CheckoutPage />,
+      },
+      {
+        path: "invoice",
+        element: <InvoicePage />,
       },
     ],
   },

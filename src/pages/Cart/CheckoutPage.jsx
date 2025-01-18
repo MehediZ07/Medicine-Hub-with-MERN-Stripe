@@ -9,9 +9,6 @@ import PurchaseModal from "./PurchaseModal";
 
 const CheckoutPage = () => {
   const { user } = useAuth(); // Replace with actual user email
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [address, setAddress] = useState("");
-  const [cardDetails, setCardDetails] = useState("");
 
   let [isOpen, setIsOpen] = useState(false);
 

@@ -115,9 +115,6 @@ const CheckoutForm = ({
         console.log("transaction id", paymentIntent.id);
         setTransactionId(paymentIntent.id);
 
-        // now save the payment in the database
-        // Now save the payment in the database
-
         try {
           // Save data in db
 
@@ -144,7 +141,7 @@ const CheckoutForm = ({
 
           toast.success("Order Successful!");
           refetch();
-          navigate("/dashboard/my-orders");
+          navigate("/invoice");
         } catch (err) {
           console.log(err);
           setError("Error placing the order. Please try again.");
