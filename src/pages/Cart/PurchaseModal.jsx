@@ -22,14 +22,7 @@ const PurchaseModal = ({
 }) => {
   const { user } = useAuth();
 
-  const [purchaseInfo, setPurchaseInfo] = useState({
-    customer: {
-      name: user?.displayName,
-      email: user?.email,
-      image: user?.photoURL,
-    },
-    totalPrice,
-  });
+  const [adress, setAdress] = useState("");
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -110,7 +103,7 @@ const PurchaseModal = ({
                     name="address"
                     id="address"
                     onChange={(e) =>
-                      setPurchaseInfo((prv) => {
+                      setAdress((prv) => {
                         return { ...prv, address: e.target.value };
                       })
                     }
@@ -124,7 +117,7 @@ const PurchaseModal = ({
                   {/* Form component */}
                   <CheckoutForm
                     closeModal={closeModal}
-                    purchaseInfo={purchaseInfo}
+                    adress={adress}
                     refetch={refetch}
                     totalPrice={totalPrice}
                     cartItems={cartItems}

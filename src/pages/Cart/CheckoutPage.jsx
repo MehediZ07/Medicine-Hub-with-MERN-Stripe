@@ -48,15 +48,15 @@ const CheckoutPage = () => {
     .toFixed(2);
 
   // Handle form submission
-  const handlePaymentSubmit = (e) => {
-    e.preventDefault();
-    if (!address || !cardDetails) {
-      alert("Please provide valid address and card details.");
-      return;
-    }
-    console.log("Payment Details:", { address, cardDetails });
-    closeModal();
-  };
+  // const handlePaymentSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!address || !cardDetails) {
+  //     alert("Please provide valid address and card details.");
+  //     return;
+  //   }
+  //   console.log("Payment Details:", { address, cardDetails });
+  //   closeModal();
+  // };
 
   const closeModal = () => {
     setIsOpen(false);

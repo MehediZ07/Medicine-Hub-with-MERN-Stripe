@@ -19,7 +19,7 @@ const SellerOrderDataRow = ({ orderData, refetch, role }) => {
   } = orderData || {};
 
   // handle order delete/cancellation
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
       //fetch delete request
       await axiosSecure.delete(`/orders/${_id}`);
@@ -108,6 +108,7 @@ const SellerOrderDataRow = ({ orderData, refetch, role }) => {
               </button>
             </div>
             <DeleteModal
+              id=""
               handleDelete={handleDelete}
               isOpen={isOpen}
               closeModal={closeModal}

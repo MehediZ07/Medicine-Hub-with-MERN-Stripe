@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const CheckoutForm = ({
   closeModal,
-  purchaseInfo,
+  adress,
   refetch,
   totalPrice,
   cartItems,
@@ -20,6 +21,31 @@ const CheckoutForm = ({
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [processing, setProcessing] = useState(false);
+
+  const [orderSummary, setOrderSummary] = useState([]); // For storing the objects
+
+  const handleStoreItems = () => {
+    const summary = cartItems?.map((item) => ({
+      customer: {
+        name: user.displayName,
+        email: user.email,
+        image: user.photoURL,
+      },
+      medicineId: item?.medicine?._id,
+      price: item?.medicine?.price * item?.buyQuantity,
+      quantity: item?.buyQuantity,
+      seller: item?.medicine?.seller?.email,
+      status: "Pending",
+      address: adress,
+    }));
+
+    setOrderSummary(summary);
+  };
+
+  useEffect(() => {
+    handleStoreItems();
+  }, [cartItems]);
 
   useEffect(() => {
     if (totalPrice > 0) {
@@ -48,6 +74,17 @@ const CheckoutForm = ({
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,
+      billing_details: {
+        address: {
+          city: adress || "", // Ensure it's just a string like "Dhaka"
+          country: "US", // Default to a valid country code (US)
+          line1: "", // Optional, default empty string if missing
+          line2: "", // Optional, default empty string if missing
+        },
+        email: user?.email || "anonymous",
+        name: user?.displayName || "anonymous",
+        phone: "", // Optional, default empty string if missing
+      },
     });
 
     if (error) {
@@ -79,14 +116,42 @@ const CheckoutForm = ({
         setTransactionId(paymentIntent.id);
 
         // now save the payment in the database
-        const payment = {
-          email: user.email,
-          price: totalPrice,
-          transactionId: paymentIntent.id,
-          date: new Date(), // utc date convert. use moment js to
+        // Now save the payment in the database
 
-          status: "pending",
-        };
+        try {
+          // Save data in db
+
+          for (const order of orderSummary) {
+            await axiosSecure.post("/order", {
+              ...order,
+              transactionId: paymentIntent?.id,
+            });
+          }
+
+          // Loop through cartItems and decrease quantity for each product
+          for (const item of cartItems) {
+            if (item?.medicine?._id && item?.buyQuantity) {
+              const productId = item?.medicine?._id; // Get product id
+              const quantityToDecrease = item.buyQuantity; // Get quantity to decrease
+
+              // Decrease quantity for the specific product
+              await axiosSecure.patch(`/medicines/quantity/${productId}`, {
+                quantityToUpdate: quantityToDecrease,
+                status: "decrease",
+              });
+            }
+          }
+
+          toast.success("Order Successful!");
+          refetch();
+          navigate("/dashboard/my-orders");
+        } catch (err) {
+          console.log(err);
+          setError("Error placing the order. Please try again.");
+        } finally {
+          setProcessing(false);
+          closeModal();
+        }
       }
     }
   };
@@ -112,7 +177,7 @@ const CheckoutForm = ({
       <button
         className="btn btn-sm btn-primary my-4"
         type="submit"
-        disabled={!stripe || !clientSecret}
+        disabled={!stripe || !clientSecret || processing}
       >
         Pay
       </button>

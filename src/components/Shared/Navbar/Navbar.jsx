@@ -7,10 +7,11 @@ import avatarImg from "../../../assets/images/placeholder.jpg";
 import logo from "../../../assets/images/logo.png";
 import { FaCartPlus } from "react-icons/fa";
 import Headroom from "react-headroom";
+import useRole from "../../../hooks/useRole";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-
+  const [role] = useRole();
   return (
     <Headroom>
       <div className=" w-full bg-opacity-50 backdrop-blur-sm  bg-transparent shadow-sm">
@@ -49,21 +50,23 @@ const Navbar = () => {
                 >
                   <span className="mx-4 font-medium">Shop</span>
                 </NavLink>
-                <NavLink
-                  to="cart"
-                  end
-                  className={({ isActive }) =>
-                    `flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
-                      isActive
-                        ? "bg-second-color  text-white font-semibold"
-                        : "text-second-color "
-                    }`
-                  }
-                >
-                  <span className="my-1 mx-2 font-medium">
-                    <FaCartPlus />
-                  </span>
-                </NavLink>
+                {
+                  <NavLink
+                    to="cart"
+                    end
+                    className={({ isActive }) =>
+                      `flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
+                        isActive
+                          ? "bg-second-color  text-white font-semibold"
+                          : "text-second-color "
+                      }`
+                    }
+                  >
+                    <span className="my-1 mx-2 font-medium">
+                      <FaCartPlus />
+                    </span>
+                  </NavLink>
+                }
                 <div className="relative">
                   <div className="flex flex-row items-center gap-3">
                     {/* Dropdown btn */}

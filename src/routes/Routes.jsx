@@ -45,7 +45,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "cart",
-        element: <CartPage />,
+        element: (
+          <PrivateRoute>
+            <CartPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "checkout",

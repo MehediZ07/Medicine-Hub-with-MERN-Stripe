@@ -6,12 +6,16 @@ import Container from "../../components/Shared/Container";
 import { FaEye } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import useRole from "../../hooks/useRole";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Shop() {
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [role] = useRole();
+  const location = useLocation();
+  const navigate = useNavigate();
   // Handle the modal open/close
   const openModal = (medicine) => {
     setSelectedMedicine(medicine);
@@ -24,6 +28,10 @@ export default function Shop() {
   };
 
   const addToCart = async (medicine) => {
+    if (!user) {
+      navigate("/login", { state: { from: location.pathname } });
+      return;
+    }
     const buyer = {
       name: user?.displayName || "Anonymous", // Fallback if user info is not available
       email: user?.email || "No Email",
@@ -84,11 +92,15 @@ export default function Shop() {
                 <td className="border p-2 text-center ">
                   <div className="flex justify-center">
                     <button
-                      className="bg-second-color text-white px-4 py-2 rounded mr-2"
+                      className={`bg-second-color text-white px-4 py-2 rounded mr-2 ${
+                        role !== "customer" && "cursor-not-allowed"
+                      }`}
                       onClick={() => addToCart(medicine)}
+                      disabled={role !== "customer"}
                     >
                       Select
                     </button>
+
                     <button
                       className="bg-first-color text-white px-4 py-2 rounded"
                       onClick={() => openModal(medicine)}
