@@ -7,12 +7,13 @@ import { FaEye } from "react-icons/fa";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
 
 export default function Shop() {
+  const { category } = useParams();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(category || "");
   const [sortDirection, setSortDirection] = useState("asc"); // or "desc"
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,8 +63,11 @@ export default function Shop() {
   if (isLoading) return <LoadingSpinner />;
 
   const filteredMedicines = medicines
-    ?.filter((medicine) =>
-      medicine.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ?.filter(
+      (medicine) =>
+        // Ensure 'name' and 'category' are defined before applying filters
+        medicine?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        medicine?.category?.toLowerCase().includes(searchQuery.toLowerCase())
     )
     ?.sort((a, b) => {
       if (sortDirection === "asc") return a.price - b.price;

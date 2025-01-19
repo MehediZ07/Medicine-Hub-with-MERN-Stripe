@@ -50,7 +50,9 @@ const Navbar = () => {
                 >
                   <span className="mx-4 font-medium">Shop</span>
                 </NavLink>
-                {
+                {role === "seller" || role === "admin" ? (
+                  ""
+                ) : (
                   <NavLink
                     to="cart"
                     end
@@ -66,7 +68,7 @@ const Navbar = () => {
                       <FaCartPlus />
                     </span>
                   </NavLink>
-                }
+                )}
                 <div className="relative">
                   <div className="flex flex-row items-center gap-3">
                     {/* Dropdown btn */}

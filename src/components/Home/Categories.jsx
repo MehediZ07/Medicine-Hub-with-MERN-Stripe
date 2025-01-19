@@ -72,7 +72,7 @@ export default function Categories({ category = false, addCategory = true }) {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-12  ">
               {categories.map((category, index) => (
                 <Link
-                  to={`/tutorial/${category?.category_name}`}
+                  to={`/shop/${category?.category_name}`}
                   key={index}
                   className={`flex items-center justify-center p-4 bg-base-100 border-2 solid border-gray-200 rounded-lg  hover:shadow transition duration-200 ${
                     index === 8
