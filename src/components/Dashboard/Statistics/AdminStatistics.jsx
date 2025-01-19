@@ -28,6 +28,7 @@ const AdminStatistics = () => {
   console.log(statData);
   const { totalUser, totalmedicines, totalRevenue, totalOrder, chartData } =
     statData || {};
+  console.log(chartData);
   if (isLoading) return <LoadingSpinner />;
   return (
     <div>

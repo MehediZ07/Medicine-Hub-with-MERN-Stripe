@@ -24,7 +24,7 @@ const InvoicePage = () => {
     },
   });
 
-  // Calculate the total price
+  console.log(orders); // Calculate the total price
   const calculateTotal = () => {
     let total = 0;
     orders.forEach((order) => {
@@ -63,7 +63,7 @@ const InvoicePage = () => {
       order?.name || "N/A",
       order?.category || "N/A",
       order?.quantity || 0,
-      `$${order?.medicine?.price || 0}`,
+      `$${order?.price / order?.quantity || 0}`,
       `$${(order?.price || 0).toFixed(2)}`,
     ]);
 
@@ -113,7 +113,7 @@ const InvoicePage = () => {
       <header
         style={{
           textAlign: "center",
-          borderBottom: "2px solid #4CAF50",
+          borderBottom: "2px solid #003f60",
           paddingBottom: "15px",
           marginBottom: "20px",
         }}
@@ -135,7 +135,7 @@ const InvoicePage = () => {
           borderRadius: "8px",
         }}
       >
-        <h3 style={{ color: "#4CAF50", marginBottom: "10px" }}>
+        <h3 style={{ color: "#003f60", marginBottom: "10px" }}>
           Customer Information
         </h3>
         <p>
@@ -152,7 +152,7 @@ const InvoicePage = () => {
             height: "60px",
             borderRadius: "50%",
             marginTop: "10px",
-            border: "2px solid #4CAF50",
+            border: "2px solid #003f60",
           }}
         />
       </section>
@@ -166,7 +166,7 @@ const InvoicePage = () => {
           borderRadius: "8px",
         }}
       >
-        <h3 style={{ color: "#4CAF50", marginBottom: "10px" }}>
+        <h3 style={{ color: "#003f60", marginBottom: "10px" }}>
           Shipping Address
         </h3>
         <p style={{ marginBottom: "0" }}>
@@ -176,7 +176,7 @@ const InvoicePage = () => {
 
       {/* Medicines Table */}
       <section style={{ marginBottom: "20px" }}>
-        <h3 style={{ color: "#4CAF50", marginBottom: "15px" }}>
+        <h3 style={{ color: "#003f60", marginBottom: "15px" }}>
           Medicine Details
         </h3>
         <table
@@ -193,7 +193,7 @@ const InvoicePage = () => {
           <thead>
             <tr
               style={{
-                backgroundColor: "#4CAF50",
+                backgroundColor: "#003f60",
                 color: "#fff",
                 textAlign: "center",
               }}
@@ -217,7 +217,7 @@ const InvoicePage = () => {
                 <td>{order?.name || "N/A"}</td>
                 <td>{order?.category || "N/A"}</td>
                 <td>{order?.quantity || 0}</td>
-                <td>${order?.medicine?.price || 0}</td>
+                <td>${order?.price / order?.quantity || 0}</td>
                 <td>${(order?.price || 0).toFixed(2)}</td>
               </tr>
             ))}
@@ -261,7 +261,7 @@ const InvoicePage = () => {
         onClick={handleDownload}
         style={{
           marginTop: "20px",
-          backgroundColor: "#4CAF50",
+          backgroundColor: "#003f60",
           color: "#fff",
           padding: "10px 20px",
           border: "none",

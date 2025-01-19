@@ -30,6 +30,29 @@ const ManageOrders = () => {
     },
   });
 
+  console.log(orders);
+
+  // Group orders by date
+  const groupedOrders = orders.reduce((acc, order) => {
+    // If the date does not exist as a key in the accumulator, initialize it as an empty array
+    if (!acc[order.date]) {
+      acc[order.date] = [];
+    }
+
+    // Push the current order to the array for this date
+    acc[order.date].push(order);
+
+    return acc;
+  }, {});
+
+  // Convert the grouped object to an array of objects for each date
+  const groupedArray = Object.keys(groupedOrders).map((date) => ({
+    date: date,
+    orders: groupedOrders[date],
+  }));
+
+  console.log(groupedArray);
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
