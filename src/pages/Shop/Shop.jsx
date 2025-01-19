@@ -67,6 +67,7 @@ export default function Shop() {
               <th className="border p-2">Image</th>
               <th className="border p-2">Medicine</th>
               <th className="border p-2">Category</th>
+              <th className="border p-2">Quantity</th>
               <th className="border p-2">Price</th>
               <th className="border p-2">Actions</th>
             </tr>
@@ -86,19 +87,22 @@ export default function Shop() {
                 <td className="border p-2  text-center">{medicine.name}</td>
                 {/* Category */}
                 <td className="border p-2 text-center">{medicine.category}</td>
+                <td className="border p-2 text-center">{medicine.quantity}</td>
                 {/* Price */}
                 <td className="border p-2 text-center">${medicine.price}</td>
                 {/* Actions */}
                 <td className="border p-2 text-center ">
                   <div className="flex justify-center">
                     <button
-                      className={`bg-second-color text-white px-4 py-2 rounded mr-2 ${
-                        role !== "customer" && "cursor-not-allowed"
+                      className={` text-white px-4 py-2 rounded mr-2 ${
+                        role !== "customer" || medicine.quantity <= 0
+                          ? "cursor-not-allowed bg-red-600"
+                          : "bg-second-color"
                       }`}
                       onClick={() => addToCart(medicine)}
-                      disabled={role !== "customer"}
+                      disabled={role !== "customer" || medicine.quantity <= 0}
                     >
-                      Select
+                      {medicine.quantity <= 0 ? "Out Of Stock" : "Select"}
                     </button>
 
                     <button
