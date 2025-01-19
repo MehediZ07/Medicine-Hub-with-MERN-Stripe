@@ -1,26 +1,34 @@
-import { Calendar } from "react-date-range";
-import { FaUserAlt, FaDollarSign } from "react-icons/fa";
-import { BsFillCartPlusFill } from "react-icons/bs";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import LoadingSpinner from "../../Shared/LoadingSpinner";
-import Chart from "../Charts/Chart";
+import Chart from "../../../components/Dashboard/Charts/Chart";
 
 import { GiMedicines } from "react-icons/gi";
+import { BsFillCartPlusFill } from "react-icons/bs";
+import { FaClockRotateLeft, FaDollarSign } from "react-icons/fa6";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../hooks/useAuth";
+import { MdPaid } from "react-icons/md";
 
-const AdminStatistics = () => {
+export default function SalesRevenue() {
+  const { user } = useAuth;
   const axiosSecure = useAxiosSecure();
-  // fetch stat data from server.
+
   const { data: statData = {}, isLoading } = useQuery({
-    queryKey: ["admin-stat"],
+    queryKey: ["seller-stat"],
     queryFn: async () => {
-      const { data } = await axiosSecure("/admin-stat");
+      const { data } = await axiosSecure(`seller-stat/user2@gmail.com`);
       return data;
     },
   });
   console.log(statData);
-  const { totalUser, totalmedicines, totalRevenue, totalOrder, chartData } =
-    statData || {};
+  const {
+    totalmedicines,
+    totalRevenue,
+    totalPendingOrders,
+    totalPaidOrders,
+    totalOrder,
+    chartData,
+  } = statData || {};
   console.log(chartData);
   if (isLoading) return <LoadingSpinner />;
   return (
@@ -63,16 +71,16 @@ const AdminStatistics = () => {
           {/* Total medicines */}
           <div className="relative flex flex-col justify-center bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
             <div
-              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-pink-600 to-pink-400 text-white shadow-pink-500/40`}
+              className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-yellow-600 to-yellow-400 text-white shadow-yellow-500/40`}
             >
-              <GiMedicines className="w-6 h-6 text-white" />
+              <FaClockRotateLeft className="w-6 h-6 text-white" />
             </div>
             <div className="p-4 text-right">
               <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                Total Medicines
+                Total Panding
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                {totalmedicines}
+                {totalPendingOrders}
               </h4>
             </div>
           </div>
@@ -81,14 +89,14 @@ const AdminStatistics = () => {
             <div
               className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-green-600 to-green-400 text-white shadow-green-500/40`}
             >
-              <FaUserAlt className="w-6 h-6 text-white" />
+              <MdPaid className="w-6 h-6 text-white" />
             </div>
             <div className="p-4 text-right">
               <p className="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                Total User
+                Total Paid
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                {totalUser}
+                {totalPaidOrders}
               </h4>
             </div>
           </div>
@@ -108,6 +116,4 @@ const AdminStatistics = () => {
       </div>
     </div>
   );
-};
-
-export default AdminStatistics;
+}
