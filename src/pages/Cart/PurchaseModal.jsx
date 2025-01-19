@@ -107,6 +107,11 @@ const PurchaseModal = ({
                         return { ...prv, address: e.target.value };
                       })
                     }
+                    onBlur={(e) =>
+                      setAdress((prv) => {
+                        return { ...prv, address: e.target.value };
+                      })
+                    }
                     type="text"
                     placeholder="Shipping Address.."
                     required

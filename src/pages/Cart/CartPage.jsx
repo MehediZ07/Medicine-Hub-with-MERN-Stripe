@@ -117,10 +117,10 @@ const CartPage = () => {
                     </th>
                     <th className="border border-gray-300 px-4 py-2">Price</th>
                     <th className="border border-gray-300 px-4 py-2">
-                      Quantity
+                      Abailable Quantity
                     </th>
                     <th className="border border-gray-300 px-4 py-2">
-                      Buyer Name
+                      Quantity
                     </th>
                     <th className="border border-gray-300 px-4 py-2">
                       Actions
@@ -140,11 +140,12 @@ const CartPage = () => {
                         ${item?.medicine?.price}
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-center">
-                        {item?.buyQuantity}
+                        {item?.medicine?.quantity}
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-center">
-                        {item?.buyer?.name}
+                        {item?.buyQuantity}
                       </td>
+
                       <td className="border border-gray-300 px-4 py-2 text-center">
                         <button
                           className="bg-green-500 text-white px-2 py-1 mr-2 rounded"

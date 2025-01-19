@@ -21,6 +21,45 @@ const MyOrders = () => {
     },
   });
   console.log(orders);
+
+  // Step 1: Group data by transactionId and sum price, quantity, medicine names, and capture the first status
+  const groupedByTransaction = orders.reduce((acc, order) => {
+    // Check if the transactionId already exists in the accumulator
+    if (!acc[order.transactionId]) {
+      // If not, initialize it with a new object
+      acc[order.transactionId] = {
+        transactionId: order.transactionId,
+        totalPrice: 0,
+        totalQuantity: 0,
+        medicineNames: new Set(), // Use a Set to avoid duplicates
+        status: order.status, // Capture the first status encountered
+      };
+    }
+
+    // Add the current order's price and quantity to the totals
+    acc[order.transactionId].totalPrice += order.price * order.quantity;
+    acc[order.transactionId].totalQuantity += order.quantity;
+
+    // Add the medicine name to the set (ensures unique names)
+    acc[order.transactionId].medicineNames.add(order.name);
+
+    return acc;
+  }, {});
+
+  // Step 2: Convert the grouped object to an array of objects and format the names
+  const resultArray = Object.values(groupedByTransaction).map((item) => {
+    // Convert the Set of medicine names to a comma-separated string
+    return {
+      transactionId: item.transactionId,
+      totalPrice: item.totalPrice,
+      totalQuantity: item.totalQuantity,
+      name: Array.from(item.medicineNames).join(", "), // Join names with a comma
+      status: item.status, // Add the status field (first encountered)
+    };
+  });
+
+  console.log(resultArray);
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
@@ -33,57 +72,58 @@ const MyOrders = () => {
             <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
               <table className="min-w-full leading-normal">
                 <thead>
-                  <tr>
+                  <tr className="text-center">
                     <th
                       scope="col"
-                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal"
                     >
-                      Image
+                      No.
                     </th>
                     <th
                       scope="col"
-                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal"
                     >
-                      Name
+                      Medicine Name
                     </th>
 
                     <th
                       scope="col"
-                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal"
                     >
-                      Price
+                      Total Quantity
                     </th>
                     <th
                       scope="col"
-                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal"
                     >
-                      Quantity
+                      Total Price
                     </th>
                     <th
                       scope="col"
-                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal"
                     >
                       Transaction ID
                     </th>
                     <th
                       scope="col"
-                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal"
                     >
                       Status
                     </th>
 
                     <th
                       scope="col"
-                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                      className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800   text-sm uppercase font-normal"
                     >
                       Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((orderData) => (
+                  {resultArray.map((orderData, i) => (
                     <CustomerOrderDataRow
-                      key={orderData._id}
+                      key={i}
+                      i={i}
                       refetch={refetch}
                       orderData={orderData}
                     />

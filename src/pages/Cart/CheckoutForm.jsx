@@ -8,10 +8,10 @@ import toast from "react-hot-toast";
 
 const CheckoutForm = ({
   closeModal,
-  adress,
   refetch,
   totalPrice,
   cartItems,
+  adress,
 }) => {
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -37,7 +37,6 @@ const CheckoutForm = ({
       quantity: item?.buyQuantity,
       seller: item?.medicine?.seller?.email,
       status: "Pending",
-      address: adress,
     }));
 
     setOrderSummary(summary);
@@ -76,7 +75,7 @@ const CheckoutForm = ({
       card,
       billing_details: {
         address: {
-          city: adress || "", // Ensure it's just a string like "Dhaka"
+          city: adress.address || "", // Ensure it's just a string like "Dhaka"
           country: "US", // Default to a valid country code (US)
           line1: "", // Optional, default empty string if missing
           line2: "", // Optional, default empty string if missing
@@ -122,6 +121,7 @@ const CheckoutForm = ({
             await axiosSecure.post("/order", {
               ...order,
               transactionId: paymentIntent?.id,
+              address: adress.address,
             });
           }
 
@@ -141,7 +141,7 @@ const CheckoutForm = ({
 
           toast.success("Order Successful!");
           refetch();
-          navigate("/invoice");
+          navigate(`/invoice/${paymentIntent.id}`);
         } catch (err) {
           console.log(err);
           setError("Error placing the order. Please try again.");

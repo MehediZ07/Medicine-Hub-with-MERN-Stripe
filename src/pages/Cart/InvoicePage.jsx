@@ -6,17 +6,20 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import logo from "../../assets/images/logo.png"; // Path to your logo file
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import { useParams } from "react-router-dom";
 
 const InvoicePage = () => {
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const { id } = useParams();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/customer-orders/${user?.email}`);
+      const { data } = await axiosSecure(
+        `/customer-orders/${user?.email}/${id}`
+      );
       return data;
     },
   });
@@ -166,7 +169,9 @@ const InvoicePage = () => {
         <h3 style={{ color: "#4CAF50", marginBottom: "10px" }}>
           Shipping Address
         </h3>
-        <p style={{ marginBottom: "0" }}>{orders[0]?.address || "N/A"}</p>
+        <p style={{ marginBottom: "0" }}>
+          {orders[orders.length - 1]?.address || "N/A"}
+        </p>
       </section>
 
       {/* Medicines Table */}
