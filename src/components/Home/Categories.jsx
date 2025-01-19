@@ -14,12 +14,13 @@ export default function Categories({ category = false, addCategory = true }) {
         `${import.meta.env.VITE_API_URL}/medicine-categories`
       );
       setCategories(response.data);
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
+  console.log(categories);
   const [inputData, setInputData] = useState({
     category_name: "",
     image: "",
