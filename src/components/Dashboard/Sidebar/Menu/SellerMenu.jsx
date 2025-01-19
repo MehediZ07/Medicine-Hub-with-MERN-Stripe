@@ -13,7 +13,7 @@ const SellerMenu = () => {
       <MenuItem icon={MdHomeWork} label="My Inventory" address="my-inventory" />
       <MenuItem
         icon={MdOutlineManageHistory}
-        label="Manage Orders"
+        label="Payment History"
         address="manage-orders"
       />
       <MenuItem

@@ -47,8 +47,8 @@ const InvoicePage = () => {
     const doc = new jsPDF();
 
     // Add logo (Adjust the x, y, width, and height as needed)
-    const imgWidth = 50; // Logo width
-    const imgHeight = 15; // Logo height
+    const imgWidth = 30; // Logo width
+    const imgHeight = 13; // Logo height
     doc.addImage(logo, "PNG", 10, 10, imgWidth, imgHeight);
 
     // Add title

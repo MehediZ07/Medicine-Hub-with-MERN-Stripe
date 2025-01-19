@@ -1,22 +1,25 @@
-import axios from "axios";
 import { useState } from "react";
-import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import Container from "../../components/Shared/Container";
 import { FaEye } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
 import { useLocation, useNavigate } from "react-router-dom";
+import DataTable from "react-data-table-component";
 
 export default function Shop() {
   const [selectedMedicine, setSelectedMedicine] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortDirection, setSortDirection] = useState("asc"); // or "desc"
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [role] = useRole();
   const location = useLocation();
   const navigate = useNavigate();
-  // Handle the modal open/close
+
   const openModal = (medicine) => {
     setSelectedMedicine(medicine);
     setIsModalOpen(true);
@@ -33,7 +36,7 @@ export default function Shop() {
       return;
     }
     const buyer = {
-      name: user?.displayName || "Anonymous", // Fallback if user info is not available
+      name: user?.displayName || "Anonymous",
       email: user?.email || "No Email",
     };
 
@@ -41,7 +44,6 @@ export default function Shop() {
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/addCart`, medicineInfo);
-
       toast.success(`${medicine.name} ${medicine.category} added to cart`);
     } catch (error) {
       console.error("Error adding to cart:", error.message);
@@ -56,146 +58,132 @@ export default function Shop() {
       return data;
     },
   });
+
   if (isLoading) return <LoadingSpinner />;
+
+  const filteredMedicines = medicines
+    ?.filter((medicine) =>
+      medicine.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    ?.sort((a, b) => {
+      if (sortDirection === "asc") return a.price - b.price;
+      return b.price - a.price;
+    });
+
+  const columns = [
+    {
+      name: "Image",
+      selector: (row) => (
+        <img
+          src={row.image}
+          alt={row.name}
+          className="w-16 h-16 object-contain"
+        />
+      ),
+    },
+    { name: "Medicine", selector: (row) => row.name, sortable: true },
+    { name: "Category", selector: (row) => row.category, sortable: true },
+    { name: "Quantity", selector: (row) => row.quantity, sortable: true },
+    { name: "Price", selector: (row) => `$${row.price}`, sortable: true },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div className="flex gap-2">
+          <button
+            className={`text-white px-4 py-2 rounded ${
+              role !== "customer" || row.quantity <= 0
+                ? "cursor-not-allowed bg-red-600"
+                : "bg-green-500 hover:bg-green-600"
+            }`}
+            onClick={() => addToCart(row)}
+            disabled={role !== "customer" || row.quantity <= 0}
+          >
+            {row.quantity <= 0 ? "Out Of Stock" : "Add to Cart"}
+          </button>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            onClick={() => openModal(row)}
+          >
+            <FaEye />
+          </button>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <Container>
-      <div className="overflow-auto">
-        <table className="table-auto w-full border-collapse overflow-auto">
-          <thead>
-            <tr>
-              <th className="border p-2">Image</th>
-              <th className="border p-2">Medicine</th>
-              <th className="border p-2">Category</th>
-              <th className="border p-2">Quantity</th>
-              <th className="border p-2">Price</th>
-              <th className="border p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {medicines.map((medicine) => (
-              <tr key={medicine.id}>
-                {/* Image column */}
-                <td className="border p-2">
-                  <img
-                    src={medicine.image}
-                    alt={medicine.name}
-                    className="w-16 h-16 object-contain"
-                  />
-                </td>
-                {/* Medicine name */}
-                <td className="border p-2  text-center">{medicine.name}</td>
-                {/* Category */}
-                <td className="border p-2 text-center">{medicine.category}</td>
-                <td className="border p-2 text-center">{medicine.quantity}</td>
-                {/* Price */}
-                <td className="border p-2 text-center">${medicine.price}</td>
-                {/* Actions */}
-                <td className="border p-2 text-center ">
-                  <div className="flex justify-center">
-                    <button
-                      className={` text-white px-4 py-2 rounded mr-2 ${
-                        role !== "customer" || medicine.quantity <= 0
-                          ? "cursor-not-allowed bg-red-600"
-                          : "bg-second-color"
-                      }`}
-                      onClick={() => addToCart(medicine)}
-                      disabled={role !== "customer" || medicine.quantity <= 0}
-                    >
-                      {medicine.quantity <= 0 ? "Out Of Stock" : "Select"}
-                    </button>
-
-                    <button
-                      className="bg-first-color text-white px-4 py-2 rounded"
-                      onClick={() => openModal(medicine)}
-                    >
-                      <FaEye />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Modal for Medicine Details */}
-        {isModalOpen && selectedMedicine && (
-          <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex justify-center items-center p-4">
-            <div className="bg-white p-6 rounded-lg max-w-md w-full overflow-y-auto max-h-[90vh]">
-              <div className="flex justify-center mb-4">
-                <img
-                  src={selectedMedicine?.image}
-                  alt={selectedMedicine?.name}
-                  className="w-32 h-32 object-contain rounded-lg shadow-md"
-                />
-              </div>
-              <h2 className="text-2xl text-center font-semibold text-gray-800 mb-4">
-                {selectedMedicine?.name}
-              </h2>
-              <div className="space-y-2 mb-4">
-                <p>
-                  <strong className="text-gray-700">Category:</strong>{" "}
-                  {selectedMedicine?.category}
-                </p>
-                <p>
-                  <strong className="text-gray-700">Description:</strong>{" "}
-                  {selectedMedicine?.description}
-                </p>
-                <p>
-                  <strong className="text-gray-700">Price:</strong> $
-                  {selectedMedicine?.price}
-                </p>
-                <p>
-                  <strong className="text-gray-700">Quantity:</strong>{" "}
-                  {selectedMedicine?.quantity}
-                </p>
-                <p>
-                  <strong className="text-gray-700">Offer:</strong>{" "}
-                  {selectedMedicine?.offer}$ Off
-                </p>
-              </div>
-
-              <div className="border-t pt-4 mt-4 flex items-center gap-4">
-                <p className="text-gray-700 font-semibold ">Seller:</p>
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={selectedMedicine?.seller.image}
-                    alt={selectedMedicine?.seller.name}
-                    className="w-12 h-12 rounded-full"
-                  />
-                  <div>
-                    <p className="text-gray-800">
-                      {selectedMedicine?.seller.name}
-                    </p>
-                    <p className="text-gray-600 text-sm">
-                      {selectedMedicine?.seller.email}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                onClick={closeModal}
-                className="mt-6 w-full py-2 bg-second-color text-white font-semibold rounded-lg hover:bg-red-600 transition"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Cart Display */}
-        {/* <div>
-          <h3 className="mt-6 text-xl font-bold">Cart</h3>
-          <ul>
-            {cart.map((medicine, index) => (
-              <li key={index} className="py-2">
-                {medicine.name} - ${medicine.price}
-              </li>
-            ))}
-          </ul>
-        </div> */}
+      <div className="flex items-center justify-center gap-4 mb-4">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="border p-2 rounded-lg w-1/3 outline-first-color border-first-color"
+        />
+        <select
+          value={sortDirection}
+          onChange={(e) => setSortDirection(e.target.value)}
+          className="px-4 py-2 border rounded-lg bg-first-color text-white"
+        >
+          <option value="asc">Sort by Price: Low to High</option>
+          <option value="desc">Sort by Price: High to Low</option>
+        </select>
       </div>
+
+      <DataTable
+        columns={columns}
+        data={filteredMedicines}
+        pagination
+        highlightOnHover
+        className="shadow-lg rounded-lg"
+      />
+
+      {isModalOpen && selectedMedicine && (
+        <div className="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 flex justify-center items-center p-4">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full overflow-y-auto max-h-[90vh]">
+            <div className="flex justify-center mb-4">
+              <img
+                src={selectedMedicine?.image}
+                alt={selectedMedicine?.name}
+                className="w-32 h-32 object-contain rounded-lg shadow-md"
+              />
+            </div>
+            <h2 className="text-2xl text-center font-semibold text-gray-800 mb-4">
+              {selectedMedicine?.name}
+            </h2>
+            <div className="space-y-2 mb-4">
+              <p>
+                <strong className="text-gray-700">Category:</strong>{" "}
+                {selectedMedicine?.category}
+              </p>
+              <p>
+                <strong className="text-gray-700">Description:</strong>{" "}
+                {selectedMedicine?.description}
+              </p>
+              <p>
+                <strong className="text-gray-700">Price:</strong> $
+                {selectedMedicine?.price}
+              </p>
+              <p>
+                <strong className="text-gray-700">Quantity:</strong>{" "}
+                {selectedMedicine?.quantity}
+              </p>
+              <p>
+                <strong className="text-gray-700">Offer:</strong>{" "}
+                {selectedMedicine?.offer}$ Off
+              </p>
+            </div>
+
+            <button
+              onClick={closeModal}
+              className="mt-6 w-full py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </Container>
   );
 }

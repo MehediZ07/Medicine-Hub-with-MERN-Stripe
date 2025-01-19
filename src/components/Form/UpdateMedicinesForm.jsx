@@ -110,7 +110,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
                 Name
               </label>
               <input
-                className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-lime-500 rounded-md bg-white"
                 name="name"
                 id="name"
                 type="text"
@@ -126,7 +126,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
               </label>
               <select
                 required
-                className="w-full px-4 py-3 border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                className="w-full px-4 py-3 border-second-color focus:outline-lime-500 rounded-md bg-white"
                 name="category"
                 defaultValue={category}
               >
@@ -151,7 +151,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
               <textarea
                 id="description"
                 placeholder="Write medicine description here..."
-                className="block rounded-md focus:lime-300 w-full h-32 px-4 py-3 text-gray-800  border border-lime-300 bg-white focus:outline-lime-500 "
+                className="block rounded-md focus:second-color w-full h-32 px-4 py-3 text-gray-800  border border-second-color bg-white focus:outline-lime-500 "
                 name="description"
                 defaultValue={description}
               ></textarea>
@@ -166,7 +166,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
                   Price
                 </label>
                 <input
-                  className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                  className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-lime-500 rounded-md bg-white"
                   name="price"
                   id="price"
                   type="number"
@@ -181,7 +181,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
                   Quantity
                 </label>
                 <input
-                  className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                  className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-lime-500 rounded-md bg-white"
                   name="quantity"
                   id="quantity"
                   type="number"
@@ -227,7 +227,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
                     ) : (
                       <img className="w-32" src={image} alt="" />
                     )}
-                    <div className="bg-lime-500 mt-2 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500">
+                    <div className="bg-second-color mt-2 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-second-color">
                       Upload Image
                     </div>
                   </label>
@@ -239,7 +239,7 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
             <button
               onClick={() => setIsEditModalOpen(false)}
               type="submit"
-              className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-lime-500 "
+              className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-second-color "
             >
               Update medicine
             </button>

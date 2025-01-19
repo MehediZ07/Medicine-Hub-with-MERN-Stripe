@@ -3,6 +3,7 @@ import MenuItem from "./MenuItem";
 import { BsGraphUp } from "react-icons/bs";
 import { MdOutlineManageHistory } from "react-icons/md";
 import { RiAdvertisementFill } from "react-icons/ri";
+import { TbReport } from "react-icons/tb";
 const AdminMenu = () => {
   return (
     <>
@@ -24,6 +25,7 @@ const AdminMenu = () => {
         address="manage-banner"
       />
 
+      <MenuItem icon={TbReport} label="Sales Report" address="sales-report" />
       <MenuItem
         icon={RiAdvertisementFill}
         label="Add Request"

@@ -25,6 +25,7 @@ import Shop from "../pages/Shop/Shop";
 import CartPage from "../pages/Cart/CartPage";
 import CheckoutPage from "../pages/Cart/CheckoutPage";
 import InvoicePage from "../pages/Cart/InvoicePage";
+import SalesReport from "../pages/Dashboard/Admin/SalesReport";
 
 export const router = createBrowserRouter([
   {
@@ -106,6 +107,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <AdminRoute>
               <ManageUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "sales-report",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <SalesReport />
             </AdminRoute>
           </PrivateRoute>
         ),
