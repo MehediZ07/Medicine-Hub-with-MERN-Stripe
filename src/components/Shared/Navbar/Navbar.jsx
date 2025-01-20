@@ -20,7 +20,7 @@ const Navbar = () => {
             <div className="flex flex-row  items-center justify-between gap-3 md:gap-0">
               {/* Logo */}
               <Link to="/">
-                <img src={logo} alt="logo" width="70" height="60" />
+                <img src={logo} alt="logo" width="100" height="80" />
               </Link>
               {/* Dropdown Menu */}
               <div className="flex gap-2 items-center">

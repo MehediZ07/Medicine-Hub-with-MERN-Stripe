@@ -68,6 +68,25 @@ export default function SalesReport() {
         `$${(item?.price * item?.quantity).toFixed(2)}`,
       ]),
     });
+
+    // Add total price and quantity
+    const finalY = doc.lastAutoTable.finalY + 10;
+    doc.text(
+      `Total Quantity: ${filteredData.reduce(
+        (sum, order) => sum + (order?.quantity || 0),
+        0
+      )}`,
+      10,
+      finalY
+    );
+    doc.text(
+      `Total Price: $${filteredData.reduce(
+        (sum, order) => sum + (order?.price || 0),
+        0
+      )}`,
+      10,
+      finalY + 10
+    );
     doc.save("sales_report.pdf");
   };
 

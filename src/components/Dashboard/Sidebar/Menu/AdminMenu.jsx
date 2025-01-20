@@ -19,13 +19,14 @@ const AdminMenu = () => {
         label="Manage Orders"
         address="manage-orders-all"
       />
+
+      <MenuItem icon={TbReport} label="Sales Report" address="sales-report" />
       <MenuItem
         icon={FaUserCog}
         label="Manage banner Advertise"
         address="manage-banner"
       />
 
-      <MenuItem icon={TbReport} label="Sales Report" address="sales-report" />
       <MenuItem
         icon={RiAdvertisementFill}
         label="Add Request"
