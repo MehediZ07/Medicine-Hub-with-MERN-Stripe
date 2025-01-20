@@ -24,11 +24,10 @@ const InvoicePage = () => {
     },
   });
 
-  console.log(orders); // Calculate the total price
   const calculateTotal = () => {
     let total = 0;
     orders.forEach((order) => {
-      total += order.price; // Total price for each item (quantity * price per piece)
+      total += order.price;
     });
     setTotalPrice(total);
   };
@@ -37,8 +36,6 @@ const InvoicePage = () => {
     calculateTotal();
   }, [orders]);
 
-  console.log(orders);
-
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -46,9 +43,9 @@ const InvoicePage = () => {
   const handleDownload = () => {
     const doc = new jsPDF();
 
-    // Add logo (Adjust the x, y, width, and height as needed)
-    const imgWidth = 30; // Logo width
-    const imgHeight = 13; // Logo height
+    // Add logo
+    const imgWidth = 30;
+    const imgHeight = 13;
     doc.addImage(logo, "PNG", 10, 10, imgWidth, imgHeight);
 
     // Add title

@@ -7,8 +7,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import { toast } from "react-hot-toast";
+
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
@@ -19,9 +18,8 @@ const PurchaseModal = ({
   totalPrice,
   refetch,
   cartItems,
+  clearCart,
 }) => {
-  const { user } = useAuth();
-
   const [adress, setAdress] = useState("");
 
   return (
@@ -57,42 +55,7 @@ const PurchaseModal = ({
                 >
                   Review Info Before Purchase
                 </DialogTitle>
-                {/* <div className="mt-2">
-                  <p className="text-sm text-gray-500">medicine: {name}</p>
-                </div>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">Category: {category}</p>
-                </div>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Customer: {user?.displayName}
-                  </p>
-                </div>
 
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">Price: $ {price}</p>
-                </div>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Available Quantity: {quantity}
-                  </p>
-                </div> */}
-                {/* Quantity input field */}
-                {/* <div className="space-x-2 mt-2 text-sm">
-                  <label htmlFor="quantity" className=" text-gray-600">
-                    Quantity:
-                  </label>
-                  <input
-                    value={totalQuantity}
-                    onChange={(e) => handleQuantity(parseInt(e.target.value))}
-                    className=" p-2 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
-                    name="quantity"
-                    id="quantity"
-                    type="number"
-                    placeholder="Available quantity"
-                    required
-                  />
-                </div> */}
                 {/* Address input field */}
                 <div className="space-x-2 mt-2 text-sm">
                   <label htmlFor="address" className=" text-gray-600">
@@ -126,6 +89,7 @@ const PurchaseModal = ({
                     refetch={refetch}
                     totalPrice={totalPrice}
                     cartItems={cartItems}
+                    clearCart={clearCart}
                   />
                 </Elements>
               </DialogPanel>

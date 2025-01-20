@@ -19,7 +19,7 @@ const MyInventory = () => {
       return data;
     },
   });
-  console.log(medicines);
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <>

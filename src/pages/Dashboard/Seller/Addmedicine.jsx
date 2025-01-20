@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-// import AddmedicineForm from "../../../components/Form/AddmedicineForm";
+
 import { imageUpload } from "../../../api/utils";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
@@ -15,7 +15,7 @@ const Addmedicine = () => {
   const [uploadImage, setUploadImage] = useState({
     image: { name: "Upload Button" },
   });
-  console.log(uploadImage);
+
   const [loading, setLoading] = useState(false);
   // handle form submit
   const handleSubmit = async (e) => {
@@ -58,7 +58,7 @@ const Addmedicine = () => {
       toast.success("Data Added Successfully!");
       navigate("/dashboard/my-inventory");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
     }

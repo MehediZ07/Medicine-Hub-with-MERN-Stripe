@@ -8,14 +8,16 @@ import toast from "react-hot-toast";
 import useRole from "../../hooks/useRole";
 import DeleteModal from "../../components/Modal/DeleteModal";
 import { useState } from "react";
+import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
+import { MdDeleteForever } from "react-icons/md";
 
 const CartPage = () => {
-  const { user } = useAuth(); // Replace with actual user email
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [role] = useRole();
   let [isOpen, setIsOpen] = useState(false);
   const closeModal = () => setIsOpen(false);
-  // Fetch cart items for the logged-in user
+
   const {
     data: cartItems,
     isLoading,
@@ -32,7 +34,6 @@ const CartPage = () => {
 
   if (isLoading) return <LoadingSpinner />;
 
-  // Calculate the total price
   const calculateTotalPrice = () => {
     return cartItems?.reduce((total, item) => {
       return total + item?.medicine?.price * item?.buyQuantity;
@@ -53,7 +54,6 @@ const CartPage = () => {
     }
   };
 
-  // Handle quantity decrement
   const decreaseQuantity = async (id) => {
     try {
       await axios.patch(`${import.meta.env.VITE_API_URL}/cart/${id}`, {
@@ -65,7 +65,6 @@ const CartPage = () => {
     }
   };
 
-  // Handle item removal
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${import.meta.env.VITE_API_URL}/cart/${id}`);
@@ -145,7 +144,7 @@ const CartPage = () => {
 
                       <td className="border border-gray-300 px-4 py-2 text-center">
                         <button
-                          className="bg-green-500 text-white px-2 py-1 mr-2 rounded"
+                          className="text-green-500  px-2 py-1 text-3xl  rounded"
                           onClick={() =>
                             increaseQuantity(
                               item?._id,
@@ -154,33 +153,33 @@ const CartPage = () => {
                             )
                           }
                         >
-                          +
+                          <CiSquarePlus />
                         </button>
+
                         <button
-                          className={`bg-red-500 text-white px-2 py-1 mr-2 rounded ${
+                          className={`text-red-500  px-2 py-1 text-3xl mr-2 rounded ${
                             item?.buyQuantity <= 1 && "hidden"
                           }`}
                           onClick={() => decreaseQuantity(item?._id)}
                           disabled={item?.buyQuantity <= 0}
                         >
-                          -
+                          <CiSquareMinus />
                         </button>
 
                         <button
-                          className={`bg-red-500 text-white px-2 py-1 mr-2 rounded ${
+                          className={`text-red-500  px-2 py-1 text-3xl mr-2 rounded ${
                             item?.buyQuantity > 1 && "hidden"
                           }`}
                           onClick={() => handleDelete(item?._id)}
                           disabled={item?.buyQuantity > 1}
                         >
-                          -
+                          <CiSquareMinus />
                         </button>
-
                         <button
-                          className="bg-gray-500 text-white px-2 py-1 rounded"
+                          className="text-red-500  px-2 py-1 text-3xl rounded"
                           onClick={() => setIsOpen(true)}
                         >
-                          Remove
+                          <MdDeleteForever />
                         </button>
                         <DeleteModal
                           id={item?._id}
@@ -194,7 +193,7 @@ const CartPage = () => {
                 </tbody>
               </table>
               <div className="mt-4">
-                <div className="font-bold text-lg">
+                <div className="font-bold text-lg mb-4">
                   Total Price: ${calculateTotalPrice()}
                 </div>
                 <button

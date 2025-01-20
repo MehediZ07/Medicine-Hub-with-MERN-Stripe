@@ -17,17 +17,13 @@ const CheckoutForm = ({ closeModal, purchaseInfo, refetch, totalQuantity }) => {
   useEffect(() => {
     getPaymentIntent();
   }, [purchaseInfo]);
-  console.log(clientSecret);
+
   const getPaymentIntent = async () => {
-    try {
-      const { data } = await axiosSecure.post("/create-payment-intent", {
-        quantity: purchaseInfo?.quantity,
-        medicineId: purchaseInfo?.medicineId,
-      });
-      setClientSecret(data.clientSecret);
-    } catch (err) {
-      console.log(err);
-    }
+    const { data } = await axiosSecure.post("/create-payment-intent", {
+      quantity: purchaseInfo?.quantity,
+      medicineId: purchaseInfo?.medicineId,
+    });
+    setClientSecret(data.clientSecret);
   };
 
   const stripe = useStripe();
@@ -39,14 +35,9 @@ const CheckoutForm = ({ closeModal, purchaseInfo, refetch, totalQuantity }) => {
     event.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
       return;
     }
 
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
     const card = elements.getElement(CardElement);
 
     if (card == null) {
@@ -61,9 +52,6 @@ const CheckoutForm = ({ closeModal, purchaseInfo, refetch, totalQuantity }) => {
     });
     if (error) {
       setProcessing(false);
-      return console.log("[error]", error);
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
     }
     // confirm payment
     const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
@@ -95,7 +83,7 @@ const CheckoutForm = ({ closeModal, purchaseInfo, refetch, totalQuantity }) => {
         refetch();
         navigate("/dashboard/my-orders");
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       } finally {
         setProcessing(false);
         closeModal();

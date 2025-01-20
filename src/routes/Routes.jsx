@@ -16,7 +16,7 @@ import ManageOrders from "../pages/Dashboard/Seller/ManageOrders";
 import MyOrders from "../pages/Dashboard/Customer/MyOrders";
 import SellerRoute from "./SellerRoute";
 import AdminRoute from "./AdminRoute";
-import MedicineDetails from "../pages/MedicineDetails/medicineDetails";
+
 import HeroSlider from "../components/Home/HeroSlider";
 import Categories from "../components/Home/Categories";
 import AskAdd from "../components/Dashboard/Sidebar/Menu/Advertisement/AskAdd";
@@ -38,10 +38,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-      {
-        path: "/medicine/:id",
-        element: <MedicineDetails />,
-      },
+
       {
         path: "shop",
         element: <Shop />,

@@ -4,13 +4,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../Shared/LoadingSpinner";
-import Container from "../Shared/Container";
+
 export default function HeroSlider({ slider, sliderImageInput = true }) {
   const [carouseldata, setCarouseldata] = useState({});
   const [loading, setLoading] = useState(true);
   const [inputData, setInputData] = useState("");
-  //   console.log(slider);
-  //   const [sliders, setSlider] = useState(slider);
 
   useEffect(() => {
     fetchData();
@@ -33,7 +31,7 @@ export default function HeroSlider({ slider, sliderImageInput = true }) {
       await axios.post(`${import.meta.env.VITE_API_URL}/carousel-img`, {
         data: inputData,
       });
-      console.log("Data submitted:", inputData);
+
       fetchData();
     } catch (error) {
       console.error("Error:", error);

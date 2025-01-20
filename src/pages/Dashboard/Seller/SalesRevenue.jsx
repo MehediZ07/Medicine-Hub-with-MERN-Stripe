@@ -8,19 +8,33 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import { MdPaid } from "react-icons/md";
+import { useEffect } from "react";
 
 export default function SalesRevenue() {
-  const { user } = useAuth;
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { data: statData = {}, isLoading } = useQuery({
+  const {
+    data: statData = {},
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["seller-stat"],
     queryFn: async () => {
-      const { data } = await axiosSecure(`seller-stat/user2@gmail.com`);
-      return data;
+      if (user?.email) {
+        const { data } = await axiosSecure(`seller-stat/${user?.email}`);
+        return data;
+      }
+      return {};
     },
   });
-  console.log(statData);
+
+  useEffect(() => {
+    if (user?.email) {
+      refetch();
+    }
+  }, [user?.email]);
+
   const {
     totalmedicines,
     totalRevenue,
@@ -29,7 +43,7 @@ export default function SalesRevenue() {
     totalOrder,
     chartData,
   } = statData || {};
-  console.log(chartData);
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <div>
@@ -108,10 +122,6 @@ export default function SalesRevenue() {
             {/* Chart goes here.. */}
             {chartData && <Chart chartData={chartData} />}
           </div>
-          {/* Calender */}
-          {/* <div className=" relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden">
-            <Calendar color="#4cc718" />
-          </div> */}
         </div>
       </div>
     </div>

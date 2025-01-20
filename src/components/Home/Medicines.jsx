@@ -1,5 +1,5 @@
 import Card from "./Card";
-import Container from "../Shared/Container";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import LoadingSpinner from "../Shared/LoadingSpinner";
@@ -14,9 +14,8 @@ const Medicines = () => {
     },
   });
 
-  const offeerMedicine = medicines.filter((item) => item.offer > 0);
-
   if (isLoading) return <LoadingSpinner />;
+  const offeerMedicine = medicines?.filter((item) => item.offer > 0);
   return (
     <div>
       <div className=" py-6 mt-12">

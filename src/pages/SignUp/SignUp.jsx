@@ -28,7 +28,7 @@ const SignUp = () => {
 
       //3. Save username & profile photo
       await updateUserProfile(name, photoURL);
-      console.log(result);
+
       // save user info in db if the user is new
       await saveUser({
         ...result?.user,
@@ -39,7 +39,6 @@ const SignUp = () => {
       navigate("/");
       toast.success("Signup Successful");
     } catch (err) {
-      console.log(err);
       toast.error(err?.message);
     }
   };
@@ -53,7 +52,6 @@ const SignUp = () => {
       navigate("/");
       toast.success("Signup Successful");
     } catch (err) {
-      console.log(err);
       toast.error(err?.message);
     }
   };

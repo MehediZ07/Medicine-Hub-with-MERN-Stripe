@@ -14,7 +14,7 @@ const Navbar = () => {
   const [role] = useRole();
   return (
     <Headroom>
-      <div className=" w-full bg-opacity-50 backdrop-blur-sm  bg-transparent shadow-sm">
+      <div className=" w-full bg-opacity-50 backdrop-blur-sm  bg-second-color/10 shadow-sm">
         <div className="py-0">
           <Container>
             <div className="flex flex-row  items-center justify-between gap-3 md:gap-0">

@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
 import { useState } from "react";
-import DeleteModal from "../../Modal/DeleteModal";
+
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import toast from "react-hot-toast";
+
 import { Link } from "react-router-dom";
 const CustomerOrderDataRow = ({ orderData, refetch, i }) => {
   const axiosSecure = useAxiosSecure();
@@ -11,26 +11,6 @@ const CustomerOrderDataRow = ({ orderData, refetch, i }) => {
   const closeModal = () => setIsOpen(false);
   const { name, totalPrice, totalQuantity, status, transactionId } = orderData;
 
-  // handle order delete/cancellation
-  // const handleDelete = async (id) => {
-  //   try {
-  //     //fetch delete request
-  //     await axiosSecure.delete(`/orders/${_id}`);
-  //     // increase quantity from medicine collection
-  //     await axiosSecure.patch(`/medicines/quantity/${medicineId}`, {
-  //       quantityToUpdate: quantity,
-  //       status: "increase",
-  //     });
-  //     // call refetch to refresh ui(fetch orders data again)
-  //     refetch();
-  //     toast.success("Order Cancelled.");
-  //   } catch (err) {
-  //     console.log(err);
-  //     toast.error(err.response.data);
-  //   } finally {
-  //     closeModal();
-  //   }
-  // };
   return (
     <tr className="text-center">
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -64,13 +44,6 @@ const CustomerOrderDataRow = ({ orderData, refetch, i }) => {
           <span className="absolute cursor-pointer inset-0 bg-red-200 opacity-50 rounded-full"></span>
           <span className="relative cursor-pointer">See Invoice</span>
         </Link>
-
-        {/* <DeleteModal
-          id=""
-          handleDelete={handleDelete}
-          isOpen={isOpen}
-          closeModal={closeModal}
-        /> */}
       </td>
     </tr>
   );

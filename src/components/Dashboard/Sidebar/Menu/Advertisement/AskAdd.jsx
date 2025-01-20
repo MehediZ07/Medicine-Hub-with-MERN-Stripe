@@ -13,7 +13,6 @@ export default function AskAdd() {
         sellerName: user?.displayName,
         sellerEmail: user?.email,
       });
-      console.log("Data submitted:", inputData);
     } catch (error) {
       console.error("Error:", error);
     }

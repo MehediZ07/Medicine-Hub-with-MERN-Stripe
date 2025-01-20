@@ -20,7 +20,7 @@ export default function Categories({ category = false, addCategory = true }) {
       console.error("Error fetching data:", error);
     }
   };
-  console.log(categories);
+
   const [inputData, setInputData] = useState({
     category_name: "",
     image: "",
@@ -43,7 +43,6 @@ export default function Categories({ category = false, addCategory = true }) {
         image: inputData.image,
       });
 
-      console.log("Category submitted:", inputData);
       fetchData();
       setInputData({
         category_name: "",
@@ -59,15 +58,15 @@ export default function Categories({ category = false, addCategory = true }) {
   }
   return (
     <div>
-      <div className=" max-w-7xl mx-auto mb-4 mt-12">
+      <div className="  mx-auto mb-4 mt-12">
         {category && (
           <>
             {" "}
             <div className="">
-              <h2 className="text-3xl font-bold">Language Categorys</h2>
+              <h2 className="text-3xl font-bold">Medicine Categorys</h2>
               <p className="text-gray-600 mt-2">
                 Out All categorie here, you can click and see all of our
-                tutorial by category.
+                Medicine by category.
               </p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 my-12  ">
@@ -86,10 +85,8 @@ export default function Categories({ category = false, addCategory = true }) {
                   </div>
                   <div className="my-4">
                     <span className="text-xl font-semibold">
-                      {category?.category_name}
-                    </span>
-                    <span className="ml-2 right-0">
-                      ( {category?.number_of_medicines} )
+                      {category?.category_name} ({" "}
+                      {category?.number_of_medicines} )
                     </span>
                   </div>
                 </Link>

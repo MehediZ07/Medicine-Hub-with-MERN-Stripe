@@ -19,10 +19,9 @@ const CustomerMenu = () => {
     try {
       // send a request to server
       const { data } = await axiosSecure.patch(`/users/${user?.email}`);
-      console.log(data);
+
       toast.success("Successfully Applied to become a seller👍");
     } catch (err) {
-      console.log(err.response.data);
       toast.error(err.response.data + "👊");
     } finally {
       closeModal();

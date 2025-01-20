@@ -102,7 +102,7 @@ export default function Shop() {
             className={`text-white px-4 py-2 rounded ${
               role !== "customer" || row.quantity <= 0
                 ? "cursor-not-allowed bg-red-600"
-                : "bg-green-500 hover:bg-green-600"
+                : "bg-first-color hover:bg-first-color"
             }`}
             onClick={() => addToCart(row)}
             disabled={role !== "customer" || row.quantity <= 0}
@@ -110,7 +110,7 @@ export default function Shop() {
             {row.quantity <= 0 ? "Out Of Stock" : "Add to Cart"}
           </button>
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="bg-second-color/80 text-white px-4 py-2 rounded hover:bg-second-color"
             onClick={() => openModal(row)}
           >
             <FaEye />

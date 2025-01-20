@@ -7,7 +7,7 @@ import {
 
 const FeaturesSection = () => {
   return (
-    <div className="my-4">
+    <div className="my-4 mb-12">
       <div className=" py-6">
         <h2 className="text-3xl font-bold">Our Features</h2>
         <p className="text-gray-600 mt-2">

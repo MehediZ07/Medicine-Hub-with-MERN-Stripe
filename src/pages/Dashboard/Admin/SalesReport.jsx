@@ -7,8 +7,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import useAuth from "../../../hooks/useAuth";
-import useRole from "../../../hooks/useRole";
+
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
@@ -23,32 +22,28 @@ export default function SalesReport() {
     },
   ]);
 
-  const { user } = useAuth();
-  const [role] = useRole();
   const axiosSecure = useAxiosSecure();
 
   const { data: salesData = [], isLoading } = useQuery({
-    queryKey: ["orders", role === "seller" ? user?.email : "All orders"],
+    queryKey: ["all-orders"],
     queryFn: async () => {
-      if (role === "seller") {
-        const { data } = await axiosSecure(
-          `/seller-orders?email=${user?.email}`
-        );
-        return data;
-      }
-      const { data } = await axiosSecure(`/seller-orders`);
+      const { data } = await axiosSecure(`/all-orders`);
+
+      setFilteredData(data.reverse());
       return data;
     },
   });
 
   // Filter data by date range
   const handleFilter = () => {
-    const startDate = dateRange[0].startDate;
-    const endDate = dateRange[0].endDate;
-    const filtered = salesData.filter((item) => {
-      const itemDate = new Date(item.date);
+    const startDate = new Date(dateRange[0].startDate).setHours(0, 0, 0, 0);
+    const endDate = new Date(dateRange[0].endDate).setHours(23, 59, 59, 999);
+
+    const filtered = filteredData.filter((item) => {
+      const itemDate = new Date(item.date).getTime();
       return itemDate >= startDate && itemDate <= endDate;
     });
+
     setFilteredData(filtered);
   };
 
@@ -65,47 +60,55 @@ export default function SalesReport() {
           "Total Price",
         ],
       ],
-      body: (filteredData.length > 0 ? filteredData : salesData).map((item) => [
-        item.name,
-        item.seller,
-        item.buyer,
-        item.quantity,
-        `$${(item.price * item.quantity).toFixed(2)}`,
+      body: filteredData.map((item) => [
+        item?.name || "NaN",
+        item?.seller || "NaN",
+        item?.customer?.email || "NaN",
+        item?.quantity || "NaN",
+        `$${(item?.price * item?.quantity).toFixed(2)}`,
       ]),
     });
     doc.save("sales_report.pdf");
   };
 
   const exportExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(
-      filteredData.length > 0 ? filteredData : salesData
-    );
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sales Report");
     XLSX.writeFile(workbook, "sales_report.xlsx");
   };
 
   const exportCSV = () => {
-    const worksheet = XLSX.utils.json_to_sheet(
-      filteredData.length > 0 ? filteredData : salesData
-    );
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
     const csvOutput = XLSX.utils.sheet_to_csv(worksheet);
     const blob = new Blob([csvOutput], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, "sales_report.csv");
   };
 
   const columns = [
-    { name: "Medicine Name", selector: (row) => row.name, sortable: true },
-    { name: "Seller Email", selector: (row) => row.seller, sortable: true },
     {
-      name: "Buyer Email",
-      selector: (row) => row.customer.email,
+      name: "Medicine Name",
+      selector: (row) => row?.name || "NaN",
       sortable: true,
     },
-    { name: "Quantity", selector: (row) => row.quantity, sortable: true },
+    {
+      name: "Seller Email",
+      selector: (row) => row?.seller || "NaN",
+      sortable: true,
+    },
+    {
+      name: "Buyer Email",
+      selector: (row) => row?.customer?.email || "NaN",
+      sortable: true,
+    },
+    {
+      name: "Quantity",
+      selector: (row) => row?.quantity || "NaN",
+      sortable: true,
+    },
     {
       name: "Total Price",
-      selector: (row) => `$${(row.price * row.quantity).toFixed(2)}`,
+      selector: (row) => `$${(row?.price * row?.quantity).toFixed(2)}`,
       sortable: true,
     },
   ];
@@ -134,7 +137,7 @@ export default function SalesReport() {
 
       <DataTable
         columns={columns}
-        data={filteredData.length > 0 ? filteredData : salesData}
+        data={filteredData}
         pagination
         highlightOnHover
         className="shadow-md rounded-lg"

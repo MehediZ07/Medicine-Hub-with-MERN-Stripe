@@ -20,45 +20,35 @@ const MyOrders = () => {
       return data;
     },
   });
-  console.log(orders);
 
-  // Step 1: Group data by transactionId and sum price, quantity, medicine names, and capture the first status
   const groupedByTransaction = orders.reduce((acc, order) => {
-    // Check if the transactionId already exists in the accumulator
     if (!acc[order.transactionId]) {
-      // If not, initialize it with a new object
       acc[order.transactionId] = {
         transactionId: order.transactionId,
         totalPrice: 0,
         totalQuantity: 0,
-        medicineNames: new Set(), // Use a Set to avoid duplicates
-        status: order.status, // Capture the first status encountered
+        medicineNames: new Set(),
+        status: order.status,
       };
     }
 
-    // Add the current order's price and quantity to the totals
     acc[order.transactionId].totalPrice += order.price * order.quantity;
     acc[order.transactionId].totalQuantity += order.quantity;
 
-    // Add the medicine name to the set (ensures unique names)
     acc[order.transactionId].medicineNames.add(order.name);
 
     return acc;
   }, {});
 
-  // Step 2: Convert the grouped object to an array of objects and format the names
   const resultArray = Object.values(groupedByTransaction).map((item) => {
-    // Convert the Set of medicine names to a comma-separated string
     return {
       transactionId: item.transactionId,
       totalPrice: item.totalPrice,
       totalQuantity: item.totalQuantity,
-      name: Array.from(item.medicineNames).join(", "), // Join names with a comma
-      status: item.status, // Add the status field (first encountered)
+      name: Array.from(item.medicineNames).join(", "),
+      status: item.status,
     };
   });
-
-  console.log(resultArray);
 
   if (isLoading) return <LoadingSpinner />;
   return (

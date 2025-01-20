@@ -12,6 +12,7 @@ const CheckoutForm = ({
   totalPrice,
   cartItems,
   adress,
+  clearCart,
 }) => {
   const [error, setError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -23,7 +24,7 @@ const CheckoutForm = ({
   const navigate = useNavigate();
   const [processing, setProcessing] = useState(false);
 
-  const [orderSummary, setOrderSummary] = useState([]); // For storing the objects
+  const [orderSummary, setOrderSummary] = useState([]);
 
   const handleStoreItems = () => {
     const summary = cartItems?.map((item) => ({
@@ -52,7 +53,6 @@ const CheckoutForm = ({
       axiosSecure
         .post("/create-payment-intent", { price: totalPrice })
         .then((res) => {
-          console.log(res.data.clientSecret);
           setClientSecret(res.data.clientSecret);
         });
     }
@@ -76,22 +76,20 @@ const CheckoutForm = ({
       card,
       billing_details: {
         address: {
-          city: adress.address || "", // Ensure it's just a string like "Dhaka"
-          country: "US", // Default to a valid country code (US)
-          line1: "", // Optional, default empty string if missing
-          line2: "", // Optional, default empty string if missing
+          city: adress.address || "",
+          country: "US",
+          line1: "",
+          line2: "",
         },
         email: user?.email || "anonymous",
         name: user?.displayName || "anonymous",
-        phone: "", // Optional, default empty string if missing
+        phone: "",
       },
     });
 
     if (error) {
-      console.log("payment error", error);
       setError(error.message);
     } else {
-      console.log("payment method", paymentMethod);
       setError("");
     }
 
@@ -108,16 +106,14 @@ const CheckoutForm = ({
       });
 
     if (confirmError) {
-      console.log("confirm error");
+      // console.log("confirm error");
     } else {
-      console.log("payment intent", paymentIntent);
+      // console.log("payment intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
-        console.log("transaction id", paymentIntent.id);
+        // console.log("transaction id", paymentIntent.id);
         setTransactionId(paymentIntent.id);
 
         try {
-          // Save data in db
-
           for (const order of orderSummary) {
             await axiosSecure.post("/order", {
               ...order,
@@ -129,8 +125,8 @@ const CheckoutForm = ({
           // Loop through cartItems and decrease quantity for each product
           for (const item of cartItems) {
             if (item?.medicine?._id && item?.buyQuantity) {
-              const productId = item?.medicine?._id; // Get product id
-              const quantityToDecrease = item.buyQuantity; // Get quantity to decrease
+              const productId = item?.medicine?._id;
+              const quantityToDecrease = item.buyQuantity;
 
               // Decrease quantity for the specific product
               await axiosSecure.patch(`/medicines/quantity/${productId}`, {
@@ -141,6 +137,7 @@ const CheckoutForm = ({
           }
 
           toast.success("Order Successful!");
+          clearCart();
           refetch();
           navigate(`/invoice/${paymentIntent.id}`);
         } catch (err) {
@@ -173,7 +170,7 @@ const CheckoutForm = ({
         }}
       />
       <button
-        className="btn btn-sm btn-primary my-4"
+        className="btn  bg-first-color/90 text-white my-4"
         type="submit"
         disabled={!stripe || !clientSecret || processing}
       >

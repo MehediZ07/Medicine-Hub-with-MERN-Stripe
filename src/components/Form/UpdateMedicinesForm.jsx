@@ -13,7 +13,6 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
 
   const user = useAuth();
   const navigate = useNavigate();
-  console.log(user);
 
   const [categories, setCategories] = useState({});
   const [loadingStat, setLoadingStat] = useState(true);
@@ -64,15 +63,14 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
     let imageUrl = uploadImage?.url;
     if (image) {
       try {
-        imageUrl = await imageUpload(image); // Assume imageUpload function handles file upload to a server or cloud
+        imageUrl = await imageUpload(image);
       } catch (error) {
         console.error("Image upload failed:", error);
         toast.error("Image upload failed. Please try again.");
-        return; // Early exit if image upload fails
+        return;
       }
     }
 
-    // Create medicine data object (including the uploaded image URL)
     const medicineData = {
       name,
       description,
@@ -80,17 +78,16 @@ const UpdateMedicinesForm = ({ medicine, refetch, setIsEditModalOpen }) => {
       price,
       quantity,
       offer,
-      image: imageUrl, // Image URL after successful upload
+      image: imageUrl,
     };
 
-    console.table(medicineData); // Optionally log the data to the console for debugging
+    console.table(medicineData);
 
     try {
-      // Send PATCH request to update the medicine data on the server
       await axiosSecure.patch(`/medicines/${_id}`, medicineData);
       toast.success("Medicine updated successfully!");
       refetch();
-      navigate("/dashboard/my-inventory"); // Redirect to another page after success
+      navigate("/dashboard/my-inventory");
     } catch (err) {
       console.error("Error updating medicine:", err);
       toast.error("Failed to update the medicine. Please try again.");

@@ -4,15 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import Container from "../../components/Shared/Container";
-import { Dialog, Transition } from "@headlessui/react";
+
 import PurchaseModal from "./PurchaseModal";
 
 const CheckoutPage = () => {
-  const { user } = useAuth(); // Replace with actual user email
+  const { user } = useAuth();
 
   let [isOpen, setIsOpen] = useState(false);
 
-  // Fetch cart items for the logged-in user
   const {
     data: cartItems,
     isLoading,
@@ -32,7 +31,6 @@ const CheckoutPage = () => {
   if (isError)
     return <div>Error loading cart items. Please try again later.</div>;
 
-  // Calculate total price and quantity
   const totalQuantity = cartItems?.reduce(
     (total, item) => total + item?.buyQuantity,
     0
@@ -44,17 +42,22 @@ const CheckoutPage = () => {
     )
     .toFixed(2);
 
-  // Handle form submission
-  // const handlePaymentSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!address || !cardDetails) {
-  //     alert("Please provide valid address and card details.");
-  //     return;
-  //   }
-  //   console.log("Payment Details:", { address, cardDetails });
-  //   closeModal();
-  // };
+  // Handle item removal
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/cart/${id}`);
+      refetch();
+    } catch (error) {
+      console.error("Error removing item:", error.message);
+    }
+  };
 
+  // Clear all cart items
+  const clearCart = async () => {
+    for (const item of cartItems) {
+      await handleDelete(item?._id);
+    }
+  };
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -129,9 +132,12 @@ const CheckoutPage = () => {
         )}
 
         <button
-          className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600"
+          className={`bg-first-color/90 text-white px-4 py-2 mt-4 rounded hover:bg-first-color ${
+            cartItems.length === 0 && "cursor-not-allowed"
+          }`}
           onClick={() => setIsOpen(true)}
           aria-label="Pay Now"
+          disabled={cartItems.length === 0}
         >
           Pay Now
         </button>
@@ -145,62 +151,8 @@ const CheckoutPage = () => {
         isOpen={isOpen}
         refetch={refetch}
         cartItems={cartItems}
+        clearCart={clearCart}
       />
-
-      {/* <Transition appear show={isModalOpen} as="div">
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <Dialog.Panel className="w-full max-w-md bg-white rounded p-6 shadow">
-                <Dialog.Title className="text-lg font-medium text-center mb-4">
-                  Payment Details
-                </Dialog.Title>
-                <form>
-                  <label className="block text-gray-700 mb-2">
-                    Address:
-                    <input
-                      type="text"
-                      className="w-full mt-1 p-2 border rounded"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      placeholder="Enter your shipping address"
-                      required
-                    />
-                  </label>
-                  <label className="block text-gray-700 mb-2">
-                    Card Details:
-                    <input
-                      type="text"
-                      className="w-full mt-1 p-2 border rounded"
-                      value={cardDetails}
-                      onChange={(e) => setCardDetails(e.target.value)}
-                      placeholder="Enter card details"
-                      required
-                    />
-                  </label>
-                  <div className="flex justify-end space-x-4 mt-4">
-                    <button
-                      type="button"
-                      className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
-                      onClick={closeModal}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                      onClick={handlePaymentSubmit}
-                    >
-                      Pay ${totalPrice}
-                    </button>
-                  </div>
-                </form>
-              </Dialog.Panel>
-            </div>
-          </div>
-        </Dialog>
-      </Transition> */}
     </Container>
   );
 };

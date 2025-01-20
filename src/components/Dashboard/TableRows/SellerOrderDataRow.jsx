@@ -21,18 +21,16 @@ const SellerOrderDataRow = ({ orderData, refetch, role }) => {
   // handle order delete/cancellation
   const handleDelete = async (id) => {
     try {
-      //fetch delete request
       await axiosSecure.delete(`/orders/${_id}`);
-      // increase quantity from medicine collection
+
       await axiosSecure.patch(`/medicines/quantity/${medicineId}`, {
         quantityToUpdate: quantity,
         status: "increase",
       });
-      // call refetch to refresh ui(fetch orders data again)
+
       refetch();
       toast.success("Order Cancelled.");
     } catch (err) {
-      console.log(err);
       toast.error(err.response.data);
     } finally {
       closeModal();
@@ -43,15 +41,13 @@ const SellerOrderDataRow = ({ orderData, refetch, role }) => {
   const handleStatus = async (newStatus) => {
     if (status === newStatus) return;
     try {
-      // update order status
       await axiosSecure.patch(`/orders/${_id}`, {
         status: newStatus,
       });
-      // call refetch to refresh ui(fetch orders data again)
+
       refetch();
       toast.success("Status Updated");
     } catch (err) {
-      console.log(err);
       toast.error(err.response.data);
     }
   };

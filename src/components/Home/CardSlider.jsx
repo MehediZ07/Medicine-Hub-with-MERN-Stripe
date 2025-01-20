@@ -4,9 +4,7 @@ import Card from "./Card";
 
 const CardSlider = ({ medicines }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [visiblemedicines, setVisiblemedicines] = useState(4); // Default to 4 medicines for larger screens.
-
-  // Handle screen resize to update visiblemedicines dynamically
+  const [visiblemedicines, setVisiblemedicines] = useState(4);
   useEffect(() => {
     const handleResize = () => {
       const newVisiblemedicines =
@@ -20,13 +18,10 @@ const CardSlider = ({ medicines }) => {
       setVisiblemedicines(newVisiblemedicines);
     };
 
-    // Set on initial load
     handleResize();
 
-    // Add event listener for resize
     window.addEventListener("resize", handleResize);
 
-    // Cleanup event listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
