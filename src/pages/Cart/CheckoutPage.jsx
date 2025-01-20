@@ -96,10 +96,12 @@ const CheckoutPage = () => {
                     {item?.buyQuantity}
                   </td>
                   <td className="border border-gray-300 px-4 py-2 text-center">
-                    ${item?.medicine?.price}
+                    ${item?.medicine?.price - item?.medicine?.offer}
                   </td>
                   <td className="border border-gray-300 px-4 py-2 text-center">
-                    ${item?.medicine?.price * item?.buyQuantity}
+                    $
+                    {(item?.medicine?.price - item?.medicine?.offer) *
+                      item?.buyQuantity}
                   </td>
                 </tr>
               ))}

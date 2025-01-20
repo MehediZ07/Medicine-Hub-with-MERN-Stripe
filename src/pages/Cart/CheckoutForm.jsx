@@ -33,7 +33,8 @@ const CheckoutForm = ({
         image: user.photoURL,
       },
       medicineId: item?.medicine?._id,
-      price: item?.medicine?.price * item?.buyQuantity,
+      price:
+        (item?.medicine?.price - item?.medicine?.offer) * item?.buyQuantity,
       quantity: item?.buyQuantity,
       seller: item?.medicine?.seller?.email,
       status: "Pending",

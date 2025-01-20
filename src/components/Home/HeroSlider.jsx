@@ -54,12 +54,12 @@ export default function HeroSlider({ slider, sliderImageInput = true }) {
           showThumbs={false}
           showStatus={false}
           transitionTime={500}
-          style={{ borderRadius: "400px" }} // Set height here
+          style={{ borderRadius: ".75rem" }} // Set height here
         >
           {carouseldata?.map((data, index) => (
-            <div className="" key={index}>
+            <div className="rounded-xl mt-4" key={index}>
               <img
-                className=""
+                className="overflow-hidden object-cover rounded-xl"
                 src={data.data}
                 alt={`carousel-image-${index}`}
               />

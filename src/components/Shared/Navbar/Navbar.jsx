@@ -74,7 +74,7 @@ const Navbar = () => {
                     {/* Dropdown btn */}
                     <div
                       onClick={() => setIsOpen(!isOpen)}
-                      className=" pl-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition"
+                      className=" pl-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition z-[1000]"
                     >
                       <AiOutlineMenu className="text-second-color" />
                       <div className="">

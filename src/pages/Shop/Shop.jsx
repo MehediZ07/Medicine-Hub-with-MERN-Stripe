@@ -70,8 +70,9 @@ export default function Shop() {
         medicine?.category?.toLowerCase().includes(searchQuery.toLowerCase())
     )
     ?.sort((a, b) => {
-      if (sortDirection === "asc") return a.price - b.price;
-      return b.price - a.price;
+      if (sortDirection === "asc")
+        return a.price - a.offer - (b.price - b.offer);
+      return b.price - b.offer - (a.price - a.offer);
     });
 
   const columns = [
@@ -88,7 +89,11 @@ export default function Shop() {
     { name: "Medicine", selector: (row) => row.name, sortable: true },
     { name: "Category", selector: (row) => row.category, sortable: true },
     { name: "Quantity", selector: (row) => row.quantity, sortable: true },
-    { name: "Price", selector: (row) => `$${row.price}`, sortable: true },
+    {
+      name: "Price Ofter off",
+      selector: (row) => `$${row.price - row.offer}`,
+      sortable: true,
+    },
     {
       name: "Actions",
       cell: (row) => (

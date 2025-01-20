@@ -5,6 +5,7 @@ import HeroSlider from "../../components/Home/HeroSlider";
 import Categories from "../../components/Home/Categories";
 import Container from "../../components/Shared/Container";
 import FeaturesSection from "../../components/Home/FeaturesSection";
+import CardSlider from "../../components/Home/CardSlider";
 
 const Home = () => {
   return (
@@ -16,9 +17,10 @@ const Home = () => {
       <Container>
         <HeroSlider slider={true} sliderImageInput={false} />
         <Categories category={true} addCategory={false} />
+        <Medicines />
         <FeaturesSection />
+        {/* <CardSlider /> */}
       </Container>
-      <Medicines />
     </div>
   );
 };

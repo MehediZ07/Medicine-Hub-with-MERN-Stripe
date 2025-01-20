@@ -8,8 +8,6 @@ import toast from "react-hot-toast";
 import useRole from "../../hooks/useRole";
 import DeleteModal from "../../components/Modal/DeleteModal";
 import { useState } from "react";
-import { FaDeleteLeft } from "react-icons/fa6";
-import { MdOutlineDeleteForever } from "react-icons/md";
 
 const CartPage = () => {
   const { user } = useAuth(); // Replace with actual user email
@@ -42,7 +40,6 @@ const CartPage = () => {
   };
 
   const increaseQuantity = async (id, stock, buyerQuentity) => {
-    console.log(id, stock, buyerQuentity);
     if (stock <= buyerQuentity) {
       return toast.error(`Stock Limit Full`);
     }
@@ -137,7 +134,7 @@ const CartPage = () => {
                         {item?.medicine?.category}
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-center">
-                        ${item?.medicine?.price}
+                        ${item?.medicine?.price - item?.medicine?.offer}
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-center">
                         {item?.medicine?.quantity}
