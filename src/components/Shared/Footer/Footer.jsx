@@ -3,16 +3,19 @@ import { Link } from "react-router-dom";
 import Container from "../Container";
 export default function Footer() {
   return (
-    <Container>
-      {" "}
-      <footer className="bg-base-100 text-gray-400 border-t border-gray-200 ">
+    <footer className="bg-base-100 text-gray-400 border-t border-gray-200 ">
+      <Container>
         <div className=" mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8">
           <div className="col-span-2">
             <Link
               to="/"
-              className="btn -mt-4 bg-transparent hover:bg-transparent border-none p-2"
+              className="btn -mt-4 bg-transparent hover:bg-transparent border-none -ml-5 "
             >
-              <img className="h-10 drop-shadow-custom" src={logo} alt="Logo" />
+              <img
+                className="h-16 drop-shadow-custom pb-2"
+                src={logo}
+                alt="Logo"
+              />
             </Link>
             <p className="text-sm">
               Sentiments two occasional affronting solicitude travelling and one
@@ -170,7 +173,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </footer>
-    </Container>
+      </Container>
+    </footer>
   );
 }

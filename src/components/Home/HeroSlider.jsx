@@ -4,6 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../Shared/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 export default function HeroSlider({ slider, sliderImageInput = true }) {
   const [carouseldata, setCarouseldata] = useState({});
@@ -44,6 +45,9 @@ export default function HeroSlider({ slider, sliderImageInput = true }) {
 
   return (
     <div>
+      <Helmet>
+        <title> Medicine Hub | Manage Banner</title>
+      </Helmet>
       {slider && (
         <Carousel
           autoPlay

@@ -10,7 +10,7 @@ const Profile = () => {
   return (
     <div className="flex justify-center items-center ">
       <Helmet>
-        <title>Profile</title>
+        <title>Medicine Hub || Profile</title>
       </Helmet>
       <div className="bg-white shadow-2xl rounded-xl md:w-4/5 lg:w-2/5">
         <div className="relative">

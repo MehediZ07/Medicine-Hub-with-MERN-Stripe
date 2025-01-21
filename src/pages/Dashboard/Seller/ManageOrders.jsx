@@ -26,7 +26,7 @@ const ManageOrders = () => {
         return data;
       }
       const { data } = await axiosSecure(`/seller-orders`);
-      return data;
+      return data.reverse();
     },
   });
 
@@ -50,7 +50,7 @@ const ManageOrders = () => {
   return (
     <>
       <Helmet>
-        <title>Manage Orders</title>
+        <title>Medicine Hub || Manage Orders</title>
       </Helmet>
       <div className="container mx-auto px-4 sm:px-8">
         <div className="py-8">

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import useAuth from "../../../../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 export default function AskAdd() {
   const [inputData, setInputData] = useState("");
@@ -19,6 +20,9 @@ export default function AskAdd() {
   };
   return (
     <div className="flex justify-center my-4 items-center rounded-xl p-4 bg-gradient-to-r from-first-color to-second-color">
+      <Helmet>
+        <title> Medicine Hub | Add Request</title>
+      </Helmet>
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xs">
         <h2 className="text-xl font-semibold text-center text-first-color mb-4">
           Ask for Advertagment

@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div>
       <Helmet>
-        <title> medicineNet | Buy Your Desired medicine</title>
+        <title> Medicine Hub | Home</title>
       </Helmet>
 
       <Container>

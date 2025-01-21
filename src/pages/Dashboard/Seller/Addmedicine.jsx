@@ -66,7 +66,7 @@ const Addmedicine = () => {
   return (
     <div>
       <Helmet>
-        <title>Add medicine | Dashboard</title>
+        <title> Medicine Hub | Add Medicine</title>
       </Helmet>
 
       {/* Form */}

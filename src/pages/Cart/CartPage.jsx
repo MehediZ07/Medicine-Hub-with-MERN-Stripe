@@ -6,17 +6,15 @@ import useAuth from "../../hooks/useAuth";
 import Container from "../../components/Shared/Container";
 import toast from "react-hot-toast";
 import useRole from "../../hooks/useRole";
-import DeleteModal from "../../components/Modal/DeleteModal";
-import { useState } from "react";
+
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
+import { Helmet } from "react-helmet-async";
 
 const CartPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [role] = useRole();
-  let [isOpen, setIsOpen] = useState(false);
-  const closeModal = () => setIsOpen(false);
 
   const {
     data: cartItems,
@@ -36,7 +34,10 @@ const CartPage = () => {
 
   const calculateTotalPrice = () => {
     return cartItems?.reduce((total, item) => {
-      return total + item?.medicine?.price * item?.buyQuantity;
+      return (
+        total +
+        (item?.medicine?.price - item?.medicine?.offer) * item?.buyQuantity
+      );
     }, 0);
   };
 
@@ -83,6 +84,9 @@ const CartPage = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title> Medicine Hub | Cart</title>
+      </Helmet>
       {role === "customer" && (
         <div className="p-4">
           {cartItems.length === 0 ? (
@@ -177,16 +181,10 @@ const CartPage = () => {
                         </button>
                         <button
                           className="text-red-500  px-2 py-1 text-3xl rounded"
-                          onClick={() => setIsOpen(true)}
+                          onClick={() => handleDelete(item?._id)}
                         >
                           <MdDeleteForever />
                         </button>
-                        <DeleteModal
-                          id={item?._id}
-                          handleDelete={handleDelete}
-                          isOpen={isOpen}
-                          closeModal={closeModal}
-                        />
                       </td>
                     </tr>
                   ))}

@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import { MdPaid } from "react-icons/md";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 export default function SalesRevenue() {
   const { user } = useAuth();
@@ -47,6 +48,9 @@ export default function SalesRevenue() {
   if (isLoading) return <LoadingSpinner />;
   return (
     <div>
+      <Helmet>
+        <title> Medicine Hub | Sales Revenue</title>
+      </Helmet>
       <div className="mt-12">
         {/* small cards */}
         <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 flex-grow">

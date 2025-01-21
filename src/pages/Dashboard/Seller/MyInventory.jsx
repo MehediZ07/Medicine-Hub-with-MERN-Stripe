@@ -24,7 +24,7 @@ const MyInventory = () => {
   return (
     <>
       <Helmet>
-        <title>My Inventory</title>
+        <title> Medicine Hub | My Inventory</title>
       </Helmet>
       <div className="container mx-auto px-4 sm:px-8">
         <div className="py-8">

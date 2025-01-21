@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import Container from "../../components/Shared/Container";
-
 import PurchaseModal from "./PurchaseModal";
+import { Helmet } from "react-helmet-async";
 
 const CheckoutPage = () => {
   const { user } = useAuth();
@@ -37,7 +37,9 @@ const CheckoutPage = () => {
   );
   const totalPrice = cartItems
     ?.reduce(
-      (total, item) => total + item?.medicine?.price * item?.buyQuantity,
+      (total, item) =>
+        total +
+        (item?.medicine?.price - item?.medicine?.offer) * item?.buyQuantity,
       0
     )
     .toFixed(2);
@@ -64,6 +66,9 @@ const CheckoutPage = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title> Medicine Hub | Check Out</title>
+      </Helmet>
       <div className="checkout-page">
         <h1 className="text-2xl font-bold mb-4">Checkout</h1>
 

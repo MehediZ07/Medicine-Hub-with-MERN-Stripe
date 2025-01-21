@@ -54,7 +54,7 @@ const MyOrders = () => {
   return (
     <>
       <Helmet>
-        <title>My Orders</title>
+        <title>Medicine Hub || My Orders</title>
       </Helmet>
       <div className="container mx-auto px-4 sm:px-8 overflow-auto">
         <div className="py-8">

@@ -57,11 +57,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "checkout",
-        element: <CheckoutPage />,
+        element: (
+          <PrivateRoute>
+            <CheckoutPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "invoice/:id",
-        element: <InvoicePage />,
+        element: (
+          <PrivateRoute>
+            <InvoicePage />,
+          </PrivateRoute>
+        ),
       },
     ],
   },

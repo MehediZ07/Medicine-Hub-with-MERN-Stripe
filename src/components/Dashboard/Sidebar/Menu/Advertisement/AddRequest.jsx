@@ -5,6 +5,7 @@ import LoadingSpinner from "../../../../Shared/LoadingSpinner";
 import toast from "react-hot-toast";
 
 import { AiOutlineFundView } from "react-icons/ai";
+import { Helmet } from "react-helmet-async";
 
 export default function AddRequest() {
   const [addRequest, setAddRequest] = useState({});
@@ -39,6 +40,10 @@ export default function AddRequest() {
   }
   return (
     <div className="table-container overflow-auto">
+      {" "}
+      <Helmet>
+        <title> Medicine Hub | Add Request</title>
+      </Helmet>
       <table className="table-auto w-full text-left border-collapse">
         <thead>
           <tr className="bg-gray-100">

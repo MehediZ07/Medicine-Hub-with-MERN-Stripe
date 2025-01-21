@@ -11,6 +11,7 @@ import "react-date-range/dist/theme/default.css";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 export default function SalesReport() {
   const [filteredData, setFilteredData] = useState([]);
@@ -136,6 +137,9 @@ export default function SalesReport() {
 
   return (
     <div className="p-4 overflow-auto">
+      <Helmet>
+        <title> Medicine Hub | Sales Report</title>
+      </Helmet>
       <h1 className="text-center font-bold text-2xl text-gray-800 mb-6">
         Sales Report
       </h1>

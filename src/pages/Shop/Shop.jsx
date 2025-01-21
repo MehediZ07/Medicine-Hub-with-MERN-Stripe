@@ -9,6 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
+import { Helmet } from "react-helmet-async";
 
 export default function Shop() {
   const { category } = useParams();
@@ -122,6 +123,9 @@ export default function Shop() {
 
   return (
     <Container>
+      <Helmet>
+        <title> Medicine Hub | Shop</title>
+      </Helmet>
       <div className="flex items-center justify-center gap-4 mb-4">
         <input
           type="text"

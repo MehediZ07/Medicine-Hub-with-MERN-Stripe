@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 export default function Categories({ category = false, addCategory = true }) {
   const [categories, setCategories] = useState({});
   const [loading, setLoading] = useState(true);
@@ -97,6 +98,9 @@ export default function Categories({ category = false, addCategory = true }) {
       </div>
       {addCategory && (
         <div className="flex justify-center items-center  bg-gradient-to-r from-first-color to-second-color rounded-lg">
+          <Helmet>
+            <title> Medicine Hub | Manage Category</title>
+          </Helmet>
           <div className="bg-white p-6 rounded-lg shadow-md my-4 w-full max-w-sm">
             <h2 className="text-xl font-semibold text-center text-first-color mb-4">
               Add Category
