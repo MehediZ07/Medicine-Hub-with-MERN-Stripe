@@ -1,8 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Shared/Navbar/Navbar";
 import Footer from "../components/Shared/Footer/Footer";
+import ScrollToTop from "react-scroll-to-top";
 
 const MainLayout = () => {
+  const scrollToTopStyle = {
+    background: "linear-gradient(to bottom, #04bdcf, #04bdcf)",
+  };
   return (
     <div className="bg-white">
       <Navbar />
@@ -11,6 +15,11 @@ const MainLayout = () => {
         <Outlet />
       </div>
       <Footer />
+      <ScrollToTop
+        smooth
+        style={scrollToTopStyle}
+        className={` rounded-xl w-12 h-12 flex justify-center items-center`}
+      />
     </div>
   );
 };

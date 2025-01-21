@@ -40,7 +40,7 @@ export default function SalesReport() {
     const startDate = new Date(dateRange[0].startDate).setHours(0, 0, 0, 0);
     const endDate = new Date(dateRange[0].endDate).setHours(23, 59, 59, 999);
 
-    const filtered = filteredData.filter((item) => {
+    const filtered = salesData.filter((item) => {
       const itemDate = new Date(item.date).getTime();
       return itemDate >= startDate && itemDate <= endDate;
     });

@@ -23,13 +23,13 @@ export default function Footer() {
             </p>
             <div className="mt-4 space-y-1">
               <div className="flex items-center space-x-2">
-                <span className="material-icons text-gray-600">
+                <span className="material-icons text-first-color">
                   Week-day Open
                 </span>
                 <span>Mon - Fri: 9AM - 10PM</span>
               </div>
               <div className="flex items-center space-x-2">
-                <span className="material-icons text-gray-600">
+                <span className="material-icons text-first-color">
                   Weekend Open
                 </span>
                 <span>Sat-Sun: 10AM - 8PM</span>
@@ -60,7 +60,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg text-gray-800 mb-4">
+            <h3 className="font-semibold text-lg text-first-color mb-4">
               Our Office
             </h3>
             <ul className="space-y-2 text-sm">
@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg text-gray-800 mb-4">
+            <h3 className="font-semibold text-lg text-first-color mb-4">
               Our Contacts
             </h3>
             <ul className="space-y-2 text-sm lg:-ml-6">
@@ -83,7 +83,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg text-gray-800 mb-4">
+            <h3 className="font-semibold text-lg text-first-color mb-4">
               Our Pharmasist
             </h3>
             <ul className="space-y-2 text-sm">
@@ -94,7 +94,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg text-gray-800 mb-4">
+            <h3 className="font-semibold text-lg text-first-color mb-4">
               Our Instagram
             </h3>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
@@ -133,13 +133,13 @@ export default function Footer() {
         </div>
         <div className="divider"></div>
 
-        <div className=" text-gray-500 py-4 col-span-2 md:col-span-1">
+        <div className=" text-first-color py-4 col-span-2 md:col-span-1">
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
             <p className="text-sm">
               &copy; 2024 Sports Villa. Created by Mehedi Zaman Fahim Studio
             </p>
             <div className="flex space-x-4 items-center cursor-pointer">
-              <span className="text-gray-500 text-sm cursor-default">
+              <span className="text-first-color text-sm cursor-default">
                 Our Social Links:
               </span>
               <a href="https:https://www.facebook.com/">

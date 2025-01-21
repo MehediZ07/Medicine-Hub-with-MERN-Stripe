@@ -1,6 +1,6 @@
 import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
-import coverImg from "../../../assets/images/cover.jpg";
+import coverImg from "../../../assets/images/covev.jpg";
 import useRole from "../../../hooks/useRole";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 const Profile = () => {

@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { shortImageName } from "../../utilities";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import LoadingSpinner from "../Shared/LoadingSpinner";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const AddMedicineForm = ({
   handleSubmit,
+  register,
+  errors,
   uploadImage,
   setUploadImage,
   loading,
@@ -31,7 +32,6 @@ const AddMedicineForm = ({
   if (loadingStat) {
     return <LoadingSpinner />;
   }
-
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
       <form onSubmit={handleSubmit}>
@@ -43,23 +43,24 @@ const AddMedicineForm = ({
                 Name
               </label>
               <input
+                {...register("name", { required: "Medicine name is required" })}
                 className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
-                name="name"
                 id="name"
                 type="text"
                 placeholder="Enter Medicine Name"
-                required
               />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name.message}</p>
+              )}
             </div>
             {/* Category */}
             <div className="space-y-1 text-sm">
-              <label htmlFor="category" className="block text-gray-600 ">
+              <label htmlFor="category" className="block text-gray-600">
                 Category
               </label>
               <select
-                required
-                className="w-full px-4 py-3 border solid border-second-color focus:outline-second-color/70 rounded-md bg-white"
-                name="category"
+                {...register("category", { required: "Category is required" })}
+                className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
               >
                 <option value="" disabled>
                   Select Category
@@ -72,112 +73,118 @@ const AddMedicineForm = ({
                   );
                 })}
               </select>
+              {errors.category && (
+                <p className="text-red-500 text-sm">
+                  {errors.category.message}
+                </p>
+              )}
             </div>
             {/* Description */}
             <div className="space-y-1 text-sm">
               <label htmlFor="description" className="block text-gray-600">
                 Description
               </label>
-
               <textarea
+                {...register("description", {
+                  required: "Description is required",
+                })}
+                className="block rounded-md w-full h-32 px-4 py-3 text-gray-800 border border-second-color bg-white focus:outline-second-color/70"
                 id="description"
                 placeholder="Write medicine description here..."
-                className="block rounded-md focus:second-color w-full h-32 px-4 py-3 text-gray-800  border border-second-color bg-white focus:outline-second-color/70 "
-                name="description"
               ></textarea>
+              {errors.description && (
+                <p className="text-red-500 text-sm">
+                  {errors.description.message}
+                </p>
+              )}
             </div>
           </div>
-          <div className="space-y-6 flex flex-col">
+          <div className="space-y-6">
             {/* Price & Quantity */}
             <div className="flex justify-between gap-2">
-              {/* Price */}
               <div className="space-y-1 text-sm">
-                <label htmlFor="price" className="block text-gray-600 ">
+                <label htmlFor="price" className="block text-gray-600">
                   Price
                 </label>
                 <input
+                  {...register("price", {
+                    required: "Price is required",
+                    valueAsNumber: true,
+                  })}
                   className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
-                  name="price"
                   id="price"
                   type="number"
                   placeholder="Price per unit"
-                  required
                 />
+                {errors.price && (
+                  <p className="text-red-500 text-sm">{errors.price.message}</p>
+                )}
               </div>
 
-              {/* Quantity */}
               <div className="space-y-1 text-sm">
                 <label htmlFor="quantity" className="block text-gray-600">
                   Quantity
                 </label>
                 <input
+                  {...register("quantity", {
+                    required: "Quantity is required",
+                    valueAsNumber: true,
+                  })}
                   className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
-                  name="quantity"
                   id="quantity"
                   type="number"
                   placeholder="Available quantity"
-                  required
                 />
+                {errors.quantity && (
+                  <p className="text-red-500 text-sm">
+                    {errors.quantity.message}
+                  </p>
+                )}
               </div>
-              {/* Offer */}
-              <div className="space-y-1 text-sm">
-                <label htmlFor="quantity" className="block text-gray-600">
-                  Offer
-                </label>
-                <input
-                  className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
-                  name="offer"
-                  id="offer"
-                  type="number"
-                  placeholder="Enter Offer Amount"
-                  required
-                />
-              </div>
+            </div>
+            {/* Offer */}
+            <div className="space-y-1 text-sm">
+              <label htmlFor="offer" className="block text-gray-600">
+                Offer
+              </label>
+              <input
+                {...register("offer", {
+                  required: "Offer is required",
+                  valueAsNumber: true,
+                })}
+                className="w-full px-4 py-3 text-gray-800 border border-second-color focus:outline-second-color/70 rounded-md bg-white"
+                id="offer"
+                type="number"
+                placeholder="Enter Offer Amount"
+              />
+              {errors.offer && (
+                <p className="text-red-500 text-sm">{errors.offer.message}</p>
+              )}
             </div>
             {/* Image */}
-            <div className=" p-4  w-full  m-auto rounded-lg flex-grow">
-              <div className="file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg">
-                <div className="flex flex-col w-max mx-auto text-center">
-                  <label>
-                    <input
-                      onChange={(e) =>
-                        setUploadImage({
-                          image: e.target.files[0],
-                          url: URL.createObjectURL(e.target.files[0]),
-                        })
-                      }
-                      className="text-sm cursor-pointer w-36 hidden"
-                      type="file"
-                      name="image"
-                      id="image"
-                      accept="image/*"
-                      hidden
-                    />
-                    <div className="bg-second-color/70 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-second-color/70">
-                      {/* {uploadImage?.image?.name} */}
-                      {shortImageName(uploadImage?.image)}
-                    </div>
-                  </label>
+            <div className=" p-4 w-full m-auto rounded-lg">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  setUploadImage({
+                    image: e.target.files[0],
+                    url: URL.createObjectURL(e.target.files[0]),
+                  })
+                }
+              />
+              {uploadImage?.image && (
+                <div className="mt-3 flex gap-5 items-center">
+                  <img src={uploadImage.url} alt="preview" className="w-20" />
+                  <p>Image: {uploadImage.image.name}</p>
                 </div>
-              </div>
+              )}
             </div>
-            {uploadImage && uploadImage?.image?.size && (
-              <div className="flex gap-5 items-center">
-                <img className="w-20" src={uploadImage?.url} alt="" />
-                <p>Image Size: {uploadImage?.image?.size} Bytes</p>
-              </div>
-            )}
-
-            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-second-color/70 "
+              className="w-full p-3 text-center text-white bg-blue-500 rounded hover:bg-blue-600"
             >
-              {loading ? (
-                <TbFidgetSpinner className="animate-spin m-auto" />
-              ) : (
-                "Save & Continue"
-              )}
+              {loading ? <TbFidgetSpinner className="animate-spin" /> : "Save"}
             </button>
           </div>
         </div>
@@ -188,8 +195,10 @@ const AddMedicineForm = ({
 
 AddMedicineForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  setUploadImage: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
   uploadImage: PropTypes.object,
+  setUploadImage: PropTypes.func.isRequired,
   loading: PropTypes.bool,
 };
 

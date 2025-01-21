@@ -54,20 +54,21 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser?.email) {
         setUser(currentUser);
+        const userInfo = { email: currentUser.email };
 
-        // Get JWT token
-        await axios.post(
-          `${import.meta.env.VITE_API_URL}/jwt`,
-          {
-            email: currentUser?.email,
-          },
-          { withCredentials: true }
-        );
+        await axios
+          .post(`${import.meta.env.VITE_API_URL}/jwt`, userInfo)
+          .then((res) => {
+            if (res.data.token) {
+              localStorage.setItem("access-token", res.data.token);
+              setLoading(false);
+            }
+          });
       } else {
         setUser(currentUser);
-        await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
-          withCredentials: true,
-        });
+        // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
+        localStorage.removeItem("access-token");
+        setLoading(false);
       }
       setLoading(false);
     });

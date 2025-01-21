@@ -8,16 +8,18 @@ import MenuItem from "./Menu/MenuItem";
 import useAuth from "../../../hooks/useAuth";
 
 import AdminMenu from "./Menu/AdminMenu";
-import { Link } from "react-router-dom";
+
 import SellerMenu from "./Menu/SellerMenu";
 import CustomerMenu from "./Menu/CustomerMenu";
 
 import useRole from "../../../hooks/useRole";
 import Headroom from "react-headroom";
+
 const Sidebar = () => {
-  const { logOut } = useAuth();
+  const { logOut, user } = useAuth();
+
   const [isActive, setActive] = useState(false);
-  const [role, isLoading] = useRole();
+  const [role] = useRole();
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
@@ -29,16 +31,14 @@ const Sidebar = () => {
       <Headroom>
         <div className="bg-second-color/30 text-white flex justify-between md:hidden">
           <div>
-            <div className="block cursor-pointer p-4 font-bold">
-              <Link to="/">
+            <div className="block cursor-pointer px-4 py-2 font-bold">
+              <div className="flex flex-col items-center   ">
                 <img
-                  // className='hidden md:block'
-                  src={logo}
-                  alt="logo"
-                  width="100"
-                  height="100"
+                  alt="profile"
+                  src={user?.photoURL}
+                  className="rounded-full border-2 border-white  shadow-lg h-16 w-16 object-cover"
                 />
-              </Link>
+              </div>
             </div>
           </div>
 
@@ -55,30 +55,39 @@ const Sidebar = () => {
       >
         <div>
           <div>
-            <div className="w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-second-color/20 mx-auto">
-              <Link to="/">
+            <div className="w-full hidden md:flex px-4 py-2  rounded-lg justify-center items-center  mx-auto">
+              <div className="flex flex-col items-center  px-6 py-4">
                 <img
-                  // className='hidden md:block'
-                  src={logo}
-                  alt="logo"
-                  width="100"
-                  height="100"
+                  alt="profile"
+                  src={user?.photoURL}
+                  className="rounded-full border-4 border-white -mt-6 shadow-lg h-24 w-24 object-cover"
                 />
-              </Link>
+                <p className="px-3 py-[.18rem] mt-2 text-sm border solid border-first-color bg-first-color/10 text-first-color rounded-full uppercase tracking-wider shadow-sm">
+                  {role}
+                </p>
+                <p className="mt-2 text-xl font-semibold text-first-color">
+                  {user?.displayName || "Your Name"}
+                </p>
+                <p className="text-sm text-first-color/85 mt-1 italic">
+                  {user?.email}
+                </p>
+              </div>
             </div>
           </div>
-
+          <div className="divider -mt-4"></div>
           {/* Nav Items */}
-          <div className="flex flex-col justify-between flex-1 mt-6">
+          <div className="flex flex-col justify-between flex-1 -mt-6">
             <nav>
               {/*  Menu Items */}
               <img
-                src={logo}
-                alt="logo"
-                width="100"
-                height="100"
-                className="-mt-5 ml-2 md:hidden"
+                alt="profile"
+                src={user?.photoURL}
+                className="rounded-full border-2 border-white   h-16 w-16 object-cover mx-auto md:hidden"
               />
+              <p className="px-3 py-[.18rem] mt-2 text-sm border solid border-first-color bg-first-color/10 text-first-color rounded-full uppercase tracking-wider  w-fit mx-auto md:hidden">
+                {role}
+              </p>
+
               {role === "customer" && <CustomerMenu />}
               {role === "seller" && <SellerMenu />}
               {role === "admin" && <AdminMenu />}

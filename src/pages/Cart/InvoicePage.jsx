@@ -48,7 +48,7 @@ const InvoicePage = () => {
     // Add logo
     const imgWidth = 30;
     const imgHeight = 13;
-    doc.addImage(logo, "PNG", 10, 10, imgWidth, imgHeight);
+    doc.addImage(logo, "PNG", 14, 10, imgWidth, imgHeight);
 
     // Add title
     doc.text("Invoice", 105, 30, { align: "center" });

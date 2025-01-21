@@ -75,7 +75,7 @@ const Login = () => {
                 id="email"
                 required
                 placeholder="Enter Your Email Here"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-first-color bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
               />
             </div>
@@ -92,7 +92,7 @@ const Login = () => {
                 id="password"
                 required
                 placeholder="*******"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-first-color bg-gray-200 text-gray-900"
               />
             </div>
           </div>
@@ -100,7 +100,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="bg-lime-500 w-full rounded-md py-3 text-white"
+              className="bg-first-color outline-first-color w-full rounded-md py-3 text-white"
             >
               {loading ? (
                 <TbFidgetSpinner className="animate-spin m-auto" />
@@ -111,7 +111,7 @@ const Login = () => {
           </div>
         </form>
         <div className="space-y-1">
-          <button className="text-xs hover:underline hover:text-lime-500 text-gray-400">
+          <button className="text-xs hover:underline hover:text-first-outline-first-color text-gray-400">
             Forgot password?
           </button>
         </div>
@@ -134,7 +134,7 @@ const Login = () => {
           Don&apos;t have an account yet?{" "}
           <Link
             to="/signup"
-            className="hover:underline hover:text-lime-500 text-gray-600"
+            className="hover:underline hover:text-first-outline-first-color text-gray-600"
           >
             Sign up
           </Link>

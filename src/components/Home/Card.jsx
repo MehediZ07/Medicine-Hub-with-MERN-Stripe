@@ -17,12 +17,12 @@ const Card = ({ medicine, massage }) => {
           />
 
           {offer > 0 && (
-            <div className="absolute top-2 left-2 bg-first-color/70 text-white px-3 py-1 text-xs font-bold rounded-md shadow-sm">
+            <div className="absolute top-2 left-2 bg-first-color/90 text-white px-3 py-1 text-xs font-bold rounded-md shadow-sm">
               {offer} $ off
             </div>
           )}
 
-          <p className="absolute bottom-2 left-2 bg-second-color/50 text-white px-2 py-1 text-xs font-medium rounded-md">
+          <p className="absolute bottom-2 left-2 bg-second-color/70 text-white px-2 py-1 text-xs font-medium rounded-md">
             {massage}
           </p>
         </div>

@@ -64,7 +64,9 @@ export default function Categories({ category = false, addCategory = true }) {
           <>
             {" "}
             <div className="">
-              <h2 className="text-3xl font-bold">Medicine Categorys</h2>
+              <h2 className="text-3xl font-bold text-first-color">
+                Medicine Categorys
+              </h2>
               <p className="text-gray-600 mt-2">
                 Out All categorie here, you can click and see all of our
                 Medicine by category.
@@ -85,7 +87,7 @@ export default function Categories({ category = false, addCategory = true }) {
                     />
                   </div>
                   <div className="my-4">
-                    <span className="text-xl font-semibold">
+                    <span className="text-xl font-semibold text-first-color">
                       {category?.category_name} ({" "}
                       {category?.number_of_medicines} )
                     </span>

@@ -3,7 +3,7 @@ export default function OursPartner() {
   return (
     <div className="mb-12">
       <div className=" py-6 mt-12 mb-4">
-        <h2 className="text-3xl font-bold">Our Partnar</h2>
+        <h2 className="text-3xl font-bold text-first-color">Our Partnar</h2>
         <p className="text-gray-600 mt-2">
           All those partners we have in relationship
         </p>
