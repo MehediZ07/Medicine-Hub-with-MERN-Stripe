@@ -21,7 +21,7 @@ const CartPage = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["medicines"],
+    queryKey: ["cart"],
     queryFn: async () => {
       const { data } = await axios(
         `${import.meta.env.VITE_API_URL}/cart?email=${user.email}`

@@ -6,12 +6,29 @@ import useAuth from "../../../hooks/useAuth";
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import logo from "../../../assets/images/logo.png";
 import { FaCartPlus } from "react-icons/fa";
+import { IoMdCart } from "react-icons/io";
 import Headroom from "react-headroom";
 import useRole from "../../../hooks/useRole";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [role] = useRole();
+
+  const {
+    data: cartItems,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["cart"],
+    queryFn: async () => {
+      const { data } = await axios(
+        `${import.meta.env.VITE_API_URL}/cart?email=${user.email}`
+      );
+      return data;
+    },
+  });
   return (
     <Headroom>
       <div className=" w-full bg-opacity-50 backdrop-blur-sm  bg-second-color/10 shadow-sm">
@@ -57,16 +74,21 @@ const Navbar = () => {
                     to="cart"
                     end
                     className={({ isActive }) =>
-                      `flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
+                      `flex items-center text-sm  md:text-base py-1 my-5 mr-1 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
                         isActive
                           ? "bg-second-color  text-white font-semibold"
                           : "text-second-color "
                       }`
                     }
                   >
-                    <span className="my-1 mx-2 font-medium">
-                      <FaCartPlus />
-                    </span>
+                    <div className="relative">
+                      <span className=" absolute translate-x-2 -top-[1.1rem] text-base ml-1 badge border-2 solid border-second-color text-second-color">
+                        {cartItems ? cartItems.length : "0"}
+                      </span>
+                      <div className="text-2xl">
+                        <IoMdCart />
+                      </div>
+                    </div>
                   </NavLink>
                 )}
                 <div className="relative">

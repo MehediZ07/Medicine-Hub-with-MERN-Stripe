@@ -1,103 +1,77 @@
 import { Helmet } from "react-helmet-async";
+
+import { imageUpload } from "../../../api/utils";
+import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import AddMedicineForm from "../../../components/Form/AddMedicineForm";
-import { useForm } from "react-hook-form"; // Import useForm hook
 
-const AddMedicine = () => {
+const Addmedicine = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const [uploadImage, setUploadImage] = useState(null);
+  const [uploadImage, setUploadImage] = useState({
+    image: { name: "Upload Button" },
+  });
+
   const [loading, setLoading] = useState(false);
-
-  // Initialize useForm hook
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  // Image upload function
-  const imageUpload = async (image) => {
-    const formData = new FormData();
-    formData.append("file", image);
-    formData.append("upload_preset", "your_upload_preset");
-    formData.append("cloud_name", "your_cloud_name");
-
-    try {
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/your_cloud_name/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error?.message || "Image upload failed");
-      }
-
-      return data.secure_url; // Return the uploaded image URL
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      throw error;
-    }
-  };
-
-  const onSubmit = async (data) => {
+  // handle form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
-    const medicineData = {
-      name: data.name,
-      category: data.category,
-      description: data.description,
-      price: parseFloat(data.price),
-      quantity: parseInt(data.quantity),
-      offer: parseInt(data.offer),
-      image: uploadImage?.image,
-      seller: {
-        name: user?.displayName,
-        email: user?.email,
-        image: user?.photoURL,
-      },
+    const form = e.target;
+    const name = form.name.value;
+    const description = form.description.value;
+    const category = form.category.value;
+    const price = parseFloat(form.price.value);
+    const quantity = parseInt(form.quantity.value);
+    const offer = parseInt(form.offer.value);
+    const image = form.image.files[0];
+    const imageUrl = await imageUpload(image);
+
+    // seller info
+    const seller = {
+      name: user?.displayName,
+      image: user?.photoURL,
+      email: user?.email,
     };
 
+    // Create medicine data object
+    const medicineData = {
+      name,
+      category,
+      description,
+      price,
+      quantity,
+      offer,
+      image: imageUrl,
+      seller,
+    };
+
+    console.table(medicineData);
+    // save medicine in db
     try {
-      if (!medicineData.image) {
-        throw new Error("Image is required");
-      }
-
-      // Upload image
-      const imageUrl = await imageUpload(uploadImage.image);
-      medicineData.image = imageUrl;
-
-      // Send data to the server
+      // post req
       await axiosSecure.post("/medicines", medicineData);
-
-      toast.success("Medicine added successfully!");
+      toast.success("Data Added Successfully!");
       navigate("/dashboard/my-inventory");
     } catch (err) {
-      toast.error("Failed to add medicine!");
-      console.error(err);
+      // console.log(err);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div>
       <Helmet>
-        <title>Medicine Hub | Add Medicine</title>
+        <title> Medicine Hub | Add Medicine</title>
       </Helmet>
+
+      {/* Form */}
       <AddMedicineForm
-        handleSubmit={handleSubmit(onSubmit)} // Pass handleSubmit with onSubmit function
-        register={register} // Pass register function here
-        errors={errors} // Pass errors object here
+        handleSubmit={handleSubmit}
         uploadImage={uploadImage}
         setUploadImage={setUploadImage}
         loading={loading}
@@ -106,4 +80,4 @@ const AddMedicine = () => {
   );
 };
 
-export default AddMedicine;
+export default Addmedicine;

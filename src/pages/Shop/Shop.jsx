@@ -32,6 +32,16 @@ export default function Shop() {
     setSelectedMedicine(null);
   };
 
+  const { data: cartItems, refetch } = useQuery({
+    queryKey: ["cart"],
+    queryFn: async () => {
+      const { data } = await axios(
+        `${import.meta.env.VITE_API_URL}/cart?email=${user.email}`
+      );
+      return data;
+    },
+  });
+
   const addToCart = async (medicine) => {
     if (!user) {
       navigate("/login", { state: { from: location.pathname } });
@@ -47,6 +57,7 @@ export default function Shop() {
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/addCart`, medicineInfo);
       toast.success(`${medicine.name} ${medicine.category} added to cart`);
+      refetch();
     } catch (error) {
       console.error("Error adding to cart:", error.message);
       console.error("Error details:", error.response?.data);

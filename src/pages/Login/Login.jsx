@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
-  if (loading) return <LoadingSpinner />;
+  // if (loading) return <LoadingSpinner />;
   if (user) return <Navigate to={from} replace={true} />;
   // form submit handler
   const handleSubmit = async (event) => {
@@ -24,11 +24,10 @@ const Login = () => {
     try {
       //User Login
       await signIn(email, password);
-
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
-      toast.error(err?.message);
+      toast.error("Envalid Email Password!");
     }
   };
 
@@ -42,8 +41,7 @@ const Login = () => {
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
-      // console.log(err)
-      toast.error(err?.message);
+      toast.error("Somthing Wrong!");
     }
   };
   return (
@@ -102,11 +100,7 @@ const Login = () => {
               type="submit"
               className="bg-first-color outline-first-color w-full rounded-md py-3 text-white"
             >
-              {loading ? (
-                <TbFidgetSpinner className="animate-spin m-auto" />
-              ) : (
-                "Continue"
-              )}
+              {loading ? "Continue" : "Continue"}
             </button>
           </div>
         </form>

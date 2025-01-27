@@ -5,8 +5,10 @@ import { toast } from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { imageUpload, saveUser } from "../../api/utils";
 import { Helmet } from "react-helmet-async";
+import { useState } from "react";
 
 const SignUp = () => {
+  const [error, setError] = useState({});
   const { createUser, updateUserProfile, signInWithGoogle, loading } =
     useAuth();
   const navigate = useNavigate();
@@ -15,9 +17,30 @@ const SignUp = () => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
+    if (name.length < 5) {
+      toast.error("Follow the requerment!", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+      setError({ ...error, name: "name should be more then 5 character" });
+      return;
+    }
     const role = form.role.value;
     const email = form.email.value;
     const password = form.password.value;
+    const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.{6,})/;
+    if (!passwordValidation.test(password)) {
+      toast.error("Follow the requerment!", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+      setError({
+        ...error,
+        password:
+          "Password must be at least 6 characters long, contain at least one uppercase letter, and one lowercase letter.",
+      });
+      return;
+    }
     const image = form.image.files[0];
 
     //1. send image data to imgbb
@@ -86,6 +109,9 @@ const SignUp = () => {
                 data-temp-mail-org="0"
               />
             </div>
+            {error.name && (
+              <label className="label text-xs text-red-500">{error.name}</label>
+            )}
             <div>
               <label htmlFor="image" className="block mb-2 text-sm">
                 Select Image:
@@ -143,6 +169,11 @@ const SignUp = () => {
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-first-color bg-gray-200 text-gray-900"
               />
             </div>
+            {error.password && (
+              <label className="label text-xs text-red-500">
+                {error.password}
+              </label>
+            )}
           </div>
 
           <div>

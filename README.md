@@ -56,4 +56,8 @@ This is a single page multi role (Customer, Seller, Admin) web application. This
 
 ![Sales Revenue](./src/assets/images/Revenue.jpeg)
 
+![Statistic](./src/assets/images/statistics.jpeg)
+
+![Sales REport](./src/assets/images/sales-report.jpeg)
+
 ![Manage Order](./src/assets/images/Manage.png)
