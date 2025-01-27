@@ -44,6 +44,14 @@ This is a single page multi role (Customer, Seller, Admin) web application. This
 
 [Requirement Document Link](https://docs.google.com/document/d/1XaaBcRNpA_LjyYqKtb4E-3xTCvU3GOzQFZyXR7HT-Tw/edit?tab=t.0).
 
+**Admin email: admin@gmail.com**
+
+**Admin password: 123456**
+
+**Seller email: seller@gmail.com**
+
+**Seller password: 123456**
+
 ## Live Link Firebase deploy
 
 [Medicine Hub Web App](https://medicine-hub-41b7f.web.app/).
