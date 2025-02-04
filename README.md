@@ -40,9 +40,20 @@ This is a single page multi role (Customer, Seller, Admin) web application. This
 18. **react-data-table-component**
 19. **react-date-range**
 
-## Requirement Document
+## Clone the Repository
+**[Admin email: admin@gmail.com](https://github.com/MehediZ07/Medicine-Hub-with-MERN-Stripe.git)**
 
-[Requirement Document Link](https://docs.google.com/document/d/1XaaBcRNpA_LjyYqKtb4E-3xTCvU3GOzQFZyXR7HT-Tw/edit?tab=t.0).
+## Install Dependencies
+**npm install**
+
+## Set Up Firebase Configuration
+**Create a .env file and add your Firebase API keys.**
+
+## Start the Development Server
+**npm run dev**
+
+
+
 
 **Admin email: admin@gmail.com**
 
