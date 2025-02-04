@@ -53,7 +53,7 @@ This is a single page multi role (Customer, Seller, Admin) web application. This
 **npm run dev**
 
 
-
+## For live site test, admin and seller email pass
 
 **Admin email: admin@gmail.com**
 
