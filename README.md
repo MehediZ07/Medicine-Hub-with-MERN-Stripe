@@ -41,7 +41,7 @@ This is a single page multi role (Customer, Seller, Admin) web application. This
 19. **react-date-range**
 
 ## Clone the Repository
-**[Admin email: admin@gmail.com](https://github.com/MehediZ07/Medicine-Hub-with-MERN-Stripe.git)**
+**git clone [https://github.com/MehediZ07/Medicine-Hub-with-MERN-Stripe.git]**
 
 ## Install Dependencies
 **npm install**
