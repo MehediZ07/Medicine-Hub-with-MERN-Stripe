@@ -4,6 +4,18 @@
 
 This is a single page multi role (Customer, Seller, Admin) web application. This project is an Medicine online shop, designed to connect customer with seller across various categories medicines. It simplifies the process of finding medicine, and buy medicine and admin can manage everything.
 
+## Key Features:
+
+1. **Digital payment system (Stripe).**
+2. **Statistic page for admin ( admin can see total revenue, order, medicine, and user)**
+3. **Sales Repor ( Admin can see the sales report as a pdf  also filtered date ways)**
+3. **Seller Revenue ( Seller can see total revenue, order, payment pending and paid)** 
+4. **Secure user authentication with Firebase and secure private API with Jwt.**
+
+
+## Technologies Used: React.js, Firebase, Express.js, MongoDB
+
+
 ## List of React Fundamental concepts used in the project
 
 1. **JSX (JavaScript XML)**
@@ -15,8 +27,7 @@ This is a single page multi role (Customer, Seller, Admin) web application. This
 7. **useEffect Hook**
 8. **CReact Router (Routing)**
 9. **Conditional Rendering**
-10. **Express**
-11. **MongoDb**
+
 
 ## List of npm packge
 
