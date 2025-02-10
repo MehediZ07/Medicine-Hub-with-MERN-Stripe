@@ -13,7 +13,7 @@ This is a single page multi role (Customer, Seller, Admin) web application. This
 4. **Secure user authentication with Firebase and secure private API with Jwt.**
 
 
-## Technologies Used: React.js, Firebase, Express.js, MongoDB
+## Technologies Used: React.js, Firebase, Express.js, MongoDB, Stripe
 
 
 ## List of React Fundamental concepts used in the project
