@@ -82,21 +82,21 @@ const Home = () => {
           </section>
 
           {/* Newsletter Section */}
-          <section className="bg-blue-600 text-white py-12 text-center">
-            <div className="container mx-auto">
+          <section className="bg-first-color text-white py-12 text-center rounded-xl">
+            <div className="max-w-3xl mx-auto px-6">
               <h2 className="text-3xl font-bold">
                 Subscribe to Our Newsletter
               </h2>
               <p className="text-lg mt-2">
-                Get updates on discounts and new arrivals.
+                Stay updated with exclusive discounts and new arrivals!
               </p>
-              <div className="mt-6 flex justify-center">
+              <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4">
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="p-3 w-80 text-black rounded-l-lg focus:outline-none"
+                  className="p-3 w-full sm:w-80 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--second-color)]"
                 />
-                <button className="bg-black px-6 py-3 rounded-r-lg">
+                <button className="bg-[var(--second-color)] px-6 py-3 rounded-lg font-bold transition-all border-2 border-white solid hover:text-[var(--first-color)] shadow-lg">
                   Subscribe
                 </button>
               </div>
