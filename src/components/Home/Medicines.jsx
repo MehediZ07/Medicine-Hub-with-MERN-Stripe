@@ -20,7 +20,7 @@ const Medicines = () => {
     <div>
       <div className=" py-6 mt-12">
         <h2 className="text-3xl font-bold text-first-color">Our Medicine</h2>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-400 mt-2">
           Here You can see aou all kind of available medicine
         </p>
       </div>
@@ -47,7 +47,7 @@ const Medicines = () => {
       )}
       <div className=" py-6 mt-6">
         <h2 className="text-3xl font-bold text-first-color">🔥 Our Offers</h2>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-400 mt-2">
           We are offering some discount on these product.
         </p>
       </div>

@@ -67,7 +67,7 @@ export default function Categories({ category = false, addCategory = true }) {
               <h2 className="text-3xl font-bold text-first-color">
                 Medicine Categorys
               </h2>
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-400 mt-2">
                 Out All categorie here, you can click and see all of our
                 Medicine by category.
               </p>
