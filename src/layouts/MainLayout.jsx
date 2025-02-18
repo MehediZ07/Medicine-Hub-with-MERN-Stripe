@@ -8,7 +8,7 @@ const MainLayout = () => {
     background: "linear-gradient(to bottom, #04bdcf, #04bdcf)",
   };
   return (
-    <div className="bg-white">
+    <div className="">
       <Navbar />
 
       <div className=" min-h-[calc(100vh-68px)]">

@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaShop } from "react-icons/fa6";
 import { MdDashboardCustomize, MdOutlineAppRegistration } from "react-icons/md";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
+import TheemToggle from "../TheemToggle";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,9 +41,12 @@ const Navbar = () => {
           <Container>
             <div className="flex flex-row  items-center justify-between gap-3 md:gap-0">
               {/* Logo */}
-              <Link to="/">
-                <img src={logo} alt="logo" width="100" height="80" />
-              </Link>
+              <div className="flex gap-2 items-center">
+                <Link to="/">
+                  <img src={logo} alt="logo" width="100" height="80" />
+                </Link>
+                <TheemToggle />
+              </div>
               {/* Dropdown Menu */}
               <div className="flex gap-2 items-center">
                 <NavLink

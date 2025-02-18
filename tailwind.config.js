@@ -5,7 +5,8 @@ export default {
   theme: {
     extend: { 
       colors: {
-      'first-color': '#003f60',  
+      // 'first-color': '#003f60',  
+      'first-color': '#a855f7',  
       'second-color': '#04bdcf', 
     },
   },

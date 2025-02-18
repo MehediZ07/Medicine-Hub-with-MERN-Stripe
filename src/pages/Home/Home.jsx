@@ -50,6 +50,14 @@ const Home = () => {
       question: "Can I track my order?",
       answer: "Yes, you will receive a tracking link after your order ships.",
     },
+    {
+      question: "What payment methods do you accept?",
+      answer: "We accept credit/debit cards, PayPal, and Stripe.",
+    },
+    {
+      question: "Do you ship internationally?",
+      answer: "Yes, we offer international shipping to most countries.",
+    },
   ];
 
   return (
@@ -67,7 +75,7 @@ const Home = () => {
         <div className="space-y-16">
           {/* Reviews Section */}
           <section className=" py-12">
-            <div className="max-w-6xl mx-auto px-4 text-center">
+            <div className=" mx-auto px-4 text-center">
               <h2 className="text-3xl font-bold mb-6 text-[var(--first-color)]">
                 Customer Reviews
               </h2>
@@ -120,25 +128,70 @@ const Home = () => {
 
           {/* FAQs Section */}
           <section className="py-12">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold text-[var(--first-color)] mb-6">
-                Frequently Asked Questions
-              </h2>
-              <div className="space-y-4">
-                {faqs.map((faq, index) => (
-                  <div
-                    key={index}
-                    className="collapse collapse-arrow bg-base-200"
-                  >
-                    <input type="checkbox" />
-                    <div className="collapse-title font-semibold text-lg text-[var(--first-color)]">
-                      {faq.question}
-                    </div>
-                    <div className="collapse-content text-gray-600">
-                      <p>{faq.answer}</p>
-                    </div>
+            <div className="w-full flex flex-col items-center justify-center mb-12">
+              <h1 className="text-3xl font-bold text-center text-gray-500 my-10">
+                Quick Question & Answer
+              </h1>
+              <div className="join join-vertical max-w-7xl w-full rounded-lg">
+                {/* Question 1 - Open by default */}
+                <div className="collapse collapse-arrow join-item">
+                  <input type="radio" name="faq-accordion" defaultChecked />
+                  <div className="collapse-title text-xl font-medium">
+                    How long does delivery take?
                   </div>
-                ))}
+                  <div className="collapse-content border-b-4 solid border-first-color rounded-xl">
+                    <p>Delivery usually takes 2-5 business days.</p>
+                  </div>
+                </div>
+
+                {/* Question 2 */}
+                <div className="collapse collapse-arrow join-item">
+                  <input type="radio" name="faq-accordion" />
+                  <div className="collapse-title text-xl font-medium">
+                    Do you offer refunds?
+                  </div>
+                  <div className="collapse-content border-b-4 solid border-first-color rounded-xl">
+                    <p>Yes, we offer refunds within 7 days of purchase.</p>
+                  </div>
+                </div>
+
+                {/* Question 3 */}
+                <div className="collapse collapse-arrow join-item">
+                  <input type="radio" name="faq-accordion" />
+                  <div className="collapse-title text-xl font-medium">
+                    Can I track my order?
+                  </div>
+                  <div className="collapse-content border-b-4 solid border-first-color rounded-xl">
+                    <p>
+                      Yes, you will receive a tracking link after your order
+                      ships.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Question 4 */}
+                <div className="collapse collapse-arrow join-item">
+                  <input type="radio" name="faq-accordion" />
+                  <div className="collapse-title text-xl font-medium">
+                    What payment methods do you accept?
+                  </div>
+                  <div className="collapse-content border-b-4 solid border-first-color rounded-xl">
+                    <p>We accept credit/debit cards, PayPal, and Stripe.</p>
+                  </div>
+                </div>
+
+                {/* Question 5 */}
+                <div className="collapse collapse-arrow join-item">
+                  <input type="radio" name="faq-accordion" />
+                  <div className="collapse-title text-xl font-medium">
+                    Do you ship internationally?
+                  </div>
+                  <div className="collapse-content border-b-4 solid border-first-color rounded-xl">
+                    <p>
+                      Yes, we offer international shipping to most countries.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
