@@ -5,12 +5,16 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import logo from "../../../assets/images/logo.png";
-import { FaCartPlus } from "react-icons/fa";
+import { FaCartPlus, FaHome } from "react-icons/fa";
+import { ImProfile } from "react-icons/im";
 import { IoMdCart } from "react-icons/io";
 import Headroom from "react-headroom";
 import useRole from "../../../hooks/useRole";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { FaShop } from "react-icons/fa6";
+import { MdDashboardCustomize, MdOutlineAppRegistration } from "react-icons/md";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +36,7 @@ const Navbar = () => {
   return (
     <Headroom>
       <div className=" w-full bg-opacity-50 backdrop-blur-sm  bg-second-color/10 shadow-sm">
-        <div className="py-0">
+        <div className="py-1">
           <Container>
             <div className="flex flex-row  items-center justify-between gap-3 md:gap-0">
               {/* Logo */}
@@ -45,7 +49,7 @@ const Navbar = () => {
                   to="/"
                   end
                   className={({ isActive }) =>
-                    `flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
+                    `hidden md:flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
                       isActive
                         ? "bg-second-color  text-white font-semibold"
                         : "text-second-color "
@@ -58,20 +62,20 @@ const Navbar = () => {
                   to="shop"
                   end
                   className={({ isActive }) =>
-                    `flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
+                    `hidden md:flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
                       isActive
                         ? "bg-second-color  text-white font-semibold"
                         : "text-second-color "
                     }`
                   }
                 >
-                  <span className="mx-4 font-medium">Shop</span>
+                  <span className="mx-4 font-medium">Medicine</span>
                 </NavLink>
                 <NavLink
                   to="/dashboard"
                   end
                   className={({ isActive }) =>
-                    `flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
+                    `hidden md:flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
                       isActive
                         ? "bg-second-color  text-white font-semibold"
                         : "text-second-color "
@@ -88,7 +92,7 @@ const Navbar = () => {
                     to="cart"
                     end
                     className={({ isActive }) =>
-                      `flex items-center text-sm  md:text-base py-1 my-5 mr-1 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
+                      `hidden md:flex items-center text-sm  md:text-base py-1 my-5 mr-1 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
                         isActive
                           ? "bg-second-color  text-white font-semibold"
                           : "text-second-color "
@@ -133,39 +137,57 @@ const Navbar = () => {
                       <div className="flex flex-col cursor-pointer">
                         <Link
                           to="/"
-                          className="block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                          className="flex gap-2 items-center md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
                         >
-                          Home
+                          <FaHome /> Home
+                        </Link>
+                        <Link
+                          to="shop"
+                          className="flex gap-2 items-center md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                        >
+                          <FaShop /> Medicine
+                        </Link>
+                        <Link
+                          to="dashboard"
+                          className="flex gap-2 items-center md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                        >
+                          <MdDashboardCustomize /> Dashboard
+                        </Link>
+                        <Link
+                          to="cart"
+                          className="md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold flex gap-2 items-center"
+                        >
+                          <FaCartPlus /> Cart
                         </Link>
 
                         {user ? (
                           <>
                             <Link
                               to="/dashboard/profile"
-                              className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                              className="px-4 py-3 hover:bg-neutral-100 transition font-semibold flex gap-2 items-center"
                             >
-                              My Profile
+                              <ImProfile /> My Profile
                             </Link>
                             <div
                               onClick={logOut}
-                              className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer"
+                              className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer flex gap-2 items-center"
                             >
-                              Logout
+                              <FiLogOut /> Logout
                             </div>
                           </>
                         ) : (
                           <>
                             <Link
                               to="/login"
-                              className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                              className="flex gap-2 items-center px-4 py-3 hover:bg-neutral-100 transition font-semibold"
                             >
-                              Login
+                              <FiLogIn /> Login
                             </Link>
                             <Link
                               to="/signup"
-                              className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                              className="flex gap-2 items-center px-4 py-3 hover:bg-neutral-100 transition font-semibold"
                             >
-                              Sign Up
+                              <MdOutlineAppRegistration /> Sign Up
                             </Link>
                           </>
                         )}
