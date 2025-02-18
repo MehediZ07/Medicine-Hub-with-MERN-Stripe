@@ -37,6 +37,21 @@ const Home = () => {
     },
   ];
 
+  const faqs = [
+    {
+      question: "How long does delivery take?",
+      answer: "Delivery usually takes 2-5 business days.",
+    },
+    {
+      question: "Do you offer refunds?",
+      answer: "Yes, we offer refunds within 7 days of purchase.",
+    },
+    {
+      question: "Can I track my order?",
+      answer: "Yes, you will receive a tracking link after your order ships.",
+    },
+  ];
+
   return (
     <div>
       <Helmet>
@@ -105,29 +120,23 @@ const Home = () => {
 
           {/* FAQs Section */}
           <section className="py-12">
-            <div className="container mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-6">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-3xl font-bold text-[var(--first-color)] mb-6">
                 Frequently Asked Questions
               </h2>
-              <div className="space-y-4 text-left max-w-2xl mx-auto">
-                {[
-                  {
-                    question: "How long does delivery take?",
-                    answer: "Delivery usually takes 2-5 business days.",
-                  },
-                  {
-                    question: "Do you offer refunds?",
-                    answer: "Yes, we offer refunds within 7 days of purchase.",
-                  },
-                  {
-                    question: "Can I track my order?",
-                    answer:
-                      "Yes, you will receive a tracking link after your order ships.",
-                  },
-                ].map((faq, index) => (
-                  <div key={index} className="p-4 bg-gray-100 rounded-lg">
-                    <h4 className="font-semibold">{faq.question}</h4>
-                    <p className="text-gray-600">{faq.answer}</p>
+              <div className="space-y-4">
+                {faqs.map((faq, index) => (
+                  <div
+                    key={index}
+                    className="collapse collapse-arrow bg-base-200"
+                  >
+                    <input type="checkbox" />
+                    <div className="collapse-title font-semibold text-lg text-[var(--first-color)]">
+                      {faq.question}
+                    </div>
+                    <div className="collapse-content text-gray-600">
+                      <p>{faq.answer}</p>
+                    </div>
                   </div>
                 ))}
               </div>
