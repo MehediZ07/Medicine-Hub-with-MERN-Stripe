@@ -67,6 +67,20 @@ const Navbar = () => {
                 >
                   <span className="mx-4 font-medium">Shop</span>
                 </NavLink>
+                <NavLink
+                  to="/dashboard"
+                  end
+                  className={({ isActive }) =>
+                    `flex items-center text-sm  md:text-base py-1 my-5 rounded-md transition-colors duration-300 transform border-2 solid border-second-color hover:bg-second-color hover:shadow-lg  hover:text-white ${
+                      isActive
+                        ? "bg-second-color  text-white font-semibold"
+                        : "text-second-color "
+                    }`
+                  }
+                >
+                  <span className="mx-4 font-medium">Dashboard</span>
+                </NavLink>
+
                 {role === "seller" || role === "admin" ? (
                   ""
                 ) : (
@@ -126,12 +140,6 @@ const Navbar = () => {
 
                         {user ? (
                           <>
-                            <Link
-                              to="/dashboard"
-                              className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
-                            >
-                              Dashboard
-                            </Link>
                             <Link
                               to="/dashboard/profile"
                               className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
